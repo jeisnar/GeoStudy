@@ -89,6 +89,21 @@
             box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.3);
         }
 
+        /* Cegah scroll "menular" dari kotak isi carousel ke halaman */
+        .custom-scrollbar { overscroll-behavior: contain; }
+
+        /* ===== Pecahan pada kalkulator ===== */
+        .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; line-height: 1.2; margin: 0 .12em; }
+        .frac > .fn { padding: 0 .3em; border-bottom: 1.5px solid currentColor; }
+        .frac > .fd { padding: 0 .3em; }
+        .approx { font-size: .7em; font-weight: 400; color: #94a3b8; margin-left: .5em; white-space: nowrap; }
+        .mf { position: relative; }
+        .mf > input { height: 46px; }
+        .mf .mf-view { position: absolute; inset: 0; display: none; align-items: center; padding: 0 .75rem; overflow: hidden; white-space: pre; pointer-events: none; font-family: 'Fira Code', monospace; font-size: .875rem; color: #1e293b; }
+        .mf[data-view="1"] > input { color: transparent; caret-color: transparent; }
+        .mf[data-view="1"] .mf-view { display: flex; }
+        .mf[data-bad="1"] > input { border-color: #fb7185; box-shadow: 0 0 0 2px rgba(251, 113, 133, .3); }
+
         /* ===== Portal Geo Leader ===== */
         .geo-portal { isolation: isolate; }
         .geo-card {
@@ -179,7 +194,7 @@
             <!-- CAROUSEL CONTAINER -->
             <div class="relative group max-w-4xl mx-auto">
                 <!-- Carousel viewport -->
-                <div class="overflow-hidden rounded-2xl shadow-xl bg-white border border-slate-200/80">
+                <div class="overflow-hidden rounded-2xl shadow-xl bg-white border border-slate-200/80" style="touch-action: pan-y pinch-zoom;">
                     <div id="carouselTrack" class="carousel-track">
                         
                         <!-- CARD 1: Latar Belakang / Permasalahan Siswa -->
@@ -418,6 +433,10 @@
                 <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">Laboratorium Eksplorasi</span>
                 <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Kalkulator Interaktif & Visualisator</h2>
                 <p class="text-slate-600 text-sm mt-2">Ubah nilai variabel di bawah ini untuk melihat perhitungan otomatis, urutan suku, dan grafik visual secara langsung.</p>
+                <p id="mfHint" class="inline-flex items-center gap-2 text-xs text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-full px-3 py-1.5 mt-3">
+                    <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                    <span>Isian boleh berupa pecahan: ketik <span class="font-mono font-semibold">3/5</span> lalu tekan spasi, otomatis menjadi pecahan. Hasil pun ditampilkan sebagai pecahan.</span>
+                </p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -445,16 +464,22 @@
                         <!-- Form Inputs -->
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Suku Pertama ($a$):</label>
-                                <input type="number" id="calc1_a" value="3" step="any" oninput="calculateBox1()" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1" for="calc1_a">Suku Pertama ($a$):</label>
+                                <div class="mf" data-calc="calculateBox1">
+                                    <input type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" id="calc1_a" value="3" aria-describedby="mfHint" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition">
+                                    <div class="mf-view" aria-hidden="true"></div>
+                                </div>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Rasio ($r$):</label>
-                                <input type="number" id="calc1_r" value="2" step="any" oninput="calculateBox1()" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1" for="calc1_r">Rasio ($r$):</label>
+                                <div class="mf" data-calc="calculateBox1">
+                                    <input type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" id="calc1_r" value="2" aria-describedby="mfHint" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition">
+                                    <div class="mf-view" aria-hidden="true"></div>
+                                </div>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Jumlah Suku / Index ($n$):</label>
-                                <input type="number" id="calc1_n" value="5" min="1" max="20" oninput="calculateBox1()" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition">
+                                <label for="calc1_n" class="block text-xs font-semibold text-slate-700 mb-1">Jumlah Suku / Index ($n$):</label>
+                                <input type="number" id="calc1_n" value="5" min="1" max="20" inputmode="numeric" style="height:46px" oninput="calculateBox1()" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition">
                             </div>
                         </div>
 
@@ -513,12 +538,18 @@
                         <!-- Form Inputs -->
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Suku Sekarang ($U_n$):</label>
-                                <input type="number" id="calc2_un" value="162" step="any" oninput="calculateBox2()" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-violet-500 focus:bg-white outline-none transition">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1" for="calc2_un">Suku Sekarang ($U_n$):</label>
+                                <div class="mf" data-calc="calculateBox2">
+                                    <input type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" id="calc2_un" value="162" aria-describedby="mfHint" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-violet-500 focus:bg-white outline-none transition">
+                                    <div class="mf-view" aria-hidden="true"></div>
+                                </div>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Suku Sebelumnya ($U_{n-1}$):</label>
-                                <input type="number" id="calc2_un_minus_1" value="54" step="any" oninput="calculateBox2()" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-violet-500 focus:bg-white outline-none transition">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1" for="calc2_un_minus_1">Suku Sebelumnya ($U_{n-1}$):</label>
+                                <div class="mf" data-calc="calculateBox2">
+                                    <input type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" id="calc2_un_minus_1" value="54" aria-describedby="mfHint" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-violet-500 focus:bg-white outline-none transition">
+                                    <div class="mf-view" aria-hidden="true"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -573,12 +604,18 @@
                         <!-- Form Inputs -->
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Suku Awal ($a$):</label>
-                                <input type="number" id="calc3_a" value="16" step="any" oninput="calculateBox3()" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-rose-500 focus:bg-white outline-none transition">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1" for="calc3_a">Suku Awal ($a$):</label>
+                                <div class="mf" data-calc="calculateBox3">
+                                    <input type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" id="calc3_a" value="16" aria-describedby="mfHint" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-rose-500 focus:bg-white outline-none transition">
+                                    <div class="mf-view" aria-hidden="true"></div>
+                                </div>
                             </div>
                             <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1">Rasio ($r$):</label>
-                                <input type="number" id="calc3_r" value="0.5" step="any" oninput="calculateBox3()" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-rose-500 focus:bg-white outline-none transition">
+                                <label class="block text-xs font-semibold text-slate-700 mb-1" for="calc3_r">Rasio ($r$):</label>
+                                <div class="mf" data-calc="calculateBox3">
+                                    <input type="text" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" id="calc3_r" value="0.5" aria-describedby="mfHint" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono focus:ring-2 focus:ring-rose-500 focus:bg-white outline-none transition">
+                                    <div class="mf-view" aria-hidden="true"></div>
+                                </div>
                             </div>
                         </div>
 
@@ -737,70 +774,212 @@
         }
 
         // Swipe Gesture support for Mobile Carousel
+        // Kartu hanya berpindah bila gerakan jari jelas HORIZONTAL dan pengguna
+        // tidak sedang menggulir isi kotak ke atas/bawah. Sebelumnya, jari yang
+        // sedikit bergeser ke samping saat membaca bagian bawah ikut memindahkan kartu.
         let touchStartX = 0;
-        let touchEndX = 0;
+        let touchStartY = 0;
+        let touchScroller = null;
+        let touchStartScroll = 0;
 
         const carouselViewport = track.parentElement;
         carouselViewport.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
+            const t = e.changedTouches[0];
+            touchStartX = t.screenX;
+            touchStartY = t.screenY;
+            touchScroller = e.target.closest ? e.target.closest('.custom-scrollbar') : null;
+            touchStartScroll = touchScroller ? touchScroller.scrollTop : 0;
         }, {passive: true});
 
         carouselViewport.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
+            const t = e.changedTouches[0];
+            const dx = t.screenX - touchStartX;
+            const dy = t.screenY - touchStartY;
+            if (touchScroller && touchScroller.scrollTop !== touchStartScroll) return; // sedang menggulir isi kotak
+            if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 2) return;           // bukan geser horizontal
+            moveCarousel(dx < 0 ? 1 : -1);                                               // kiri = berikutnya, kanan = sebelumnya
         }, {passive: true});
-
-        function handleSwipe() {
-            if (touchEndX < touchStartX - 40) {
-                moveCarousel(1); // Swipe left -> Next
-            }
-            if (touchEndX > touchStartX + 40) {
-                moveCarousel(-1); // Swipe right -> Prev
-            }
-        }
 
 
         /* ============================================================
            2. CALCULATOR & FORMULA LOGIC (SECTION 3)
            ============================================================ */
         
+        // --- Aritmetika pecahan eksak (BigInt), agar 1/3 tidak berubah menjadi 0.3333 ---
+        /* PURE-START */
+        const gcdB = (a, b) => { a = a < 0n ? -a : a; b = b < 0n ? -b : b; while (b) { const t = a % b; a = b; b = t; } return a; };
+        function F(n, d = 1n) {
+            if (d === 0n) throw new RangeError('div0');
+            if (d < 0n) { n = -n; d = -d; }
+            const g = gcdB(n, d) || 1n;
+            return { n: n / g, d: d / g };
+        }
+        const ZERO = F(0n), ONE = F(1n);
+        const fAdd = (x, y) => F(x.n * y.d + y.n * x.d, x.d * y.d);
+        const fSub = (x, y) => F(x.n * y.d - y.n * x.d, x.d * y.d);
+        const fMul = (x, y) => F(x.n * y.n, x.d * y.d);
+        const fDiv = (x, y) => F(x.n * y.d, x.d * y.n);
+        const fPow = (x, k) => F(x.n ** BigInt(k), x.d ** BigInt(k));
+        const fCmp = (x, y) => { const l = x.n * y.d, r = y.n * x.d; return l < r ? -1 : (l > r ? 1 : 0); };
+        const fAbs = (x) => ({ n: x.n < 0n ? -x.n : x.n, d: x.d });
+        const fIsInt = (x) => x.d === 1n;
+
+        // Bilangan sangat besar ditulis ilmiah (mis. 1.2346e+25) supaya tidak melebar
+        function sciStr(neg, digits) {
+            let m = digits[0] + (digits.length > 1 ? '.' + digits.slice(1, 5).replace(/0+$/, '') : '');
+            m = m.replace(/\.$/, '');
+            return (neg ? '-' : '') + m + 'e+' + (digits.length - 1);
+        }
+        function bigStr(b) {
+            const neg = b < 0n, s = (neg ? -b : b).toString();
+            return s.length > 15 ? sciStr(neg, s) : (neg ? '-' : '') + s;
+        }
+        function decStr(x, digits = 4, strip = true) {
+            const neg = x.n < 0n;
+            const n = neg ? -x.n : x.n;
+            const scale = 10n ** BigInt(digits);
+            const q = (n * scale * 2n + x.d) / (x.d * 2n); // pembulatan setengah ke atas
+            const ip = (q / scale).toString();
+            if (ip.length > 15) return sciStr(neg, ip);
+            let fp = (q % scale).toString().padStart(digits, '0');
+            if (strip) fp = fp.replace(/0+$/, '');
+            return (neg && q !== 0n ? '-' : '') + ip + (fp ? '.' + fp : '');
+        }
+        const fToNum = (x) => {
+            const a = Number(x.n), b = Number(x.d);
+            return (isFinite(a) && isFinite(b)) ? a / b : parseFloat(decStr(x, 6));
+        };
+
+        // "12", "12.5", ".5", "12,5" -> pecahan eksak (null bila tidak valid)
+        function parseDec(s) {
+            const m = /^(\d*)(?:[.,](\d*))?$/.exec(s);
+            if (!m || (m[1] === '' && !m[2])) return null;
+            const fp = m[2] || '';
+            return F(BigInt((m[1] || '0') + fp), 10n ** BigInt(fp.length));
+        }
+
+        // Membaca isian: bilangan bulat, desimal, pecahan (3/5), atau pecahan campuran (1 3/5)
+        function parseField(raw) {
+            let s = raw.replace(/\s*\/\s*/g, '/').trim();
+            if (s === '') return { state: 'empty', value: ZERO, isFrac: false };
+            const bad = { state: 'invalid', value: ZERO, isFrac: false };
+            let sign = 1n;
+            const sm = /^([+-])\s*(.*)$/.exec(s);
+            if (sm) { if (sm[1] === '-') sign = -1n; s = sm[2]; }
+            try {
+                let m = /^(\d+)\s+([\d.,]+)\/([\d.,]+)$/.exec(s);
+                if (m) {
+                    const w = parseDec(m[1]), nu = parseDec(m[2]), de = parseDec(m[3]);
+                    if (!w || !nu || !de) return bad;
+                    if (de.n === 0n) return { state: 'div0', value: ZERO, isFrac: true };
+                    return { state: 'ok', value: fMul(F(sign), fAdd(w, fDiv(nu, de))), isFrac: true };
+                }
+                m = /^([\d.,]+)\/([\d.,]+)$/.exec(s);
+                if (m) {
+                    const nu = parseDec(m[1]), de = parseDec(m[2]);
+                    if (!nu || !de) return bad;
+                    if (de.n === 0n) return { state: 'div0', value: ZERO, isFrac: true };
+                    return { state: 'ok', value: fMul(F(sign), fDiv(nu, de)), isFrac: true };
+                }
+                const v = parseDec(s);
+                if (!v) return bad;
+                return { state: 'ok', value: fMul(F(sign), v), isFrac: false };
+            } catch (e) {
+                return bad;
+            }
+        }
+
+        // Tampilan hasil (HTML): pecahan bertingkat + perkiraan desimal
+        function fracHTML(neg, n, d) {
+            return (neg ? '−' : '') + '<span class="frac"><span class="fn">' + n + '</span><span class="fd">' + d + '</span></span>';
+        }
+        function valHTML(x, asFrac, approx) {
+            if (!asFrac || fIsInt(x)) return asFrac ? bigStr(x.n) : decStr(x);
+            const neg = x.n < 0n;
+            let h = fracHTML(neg, bigStr(neg ? -x.n : x.n), bigStr(x.d));
+            if (approx) h += '<span class="approx">≈ ' + decStr(x) + '</span>';
+            return h;
+        }
+
+        // Tampilan langkah (LaTeX). paren: 0 = tanpa kurung, 1 = kurung jika negatif, 2 = sebagai basis pangkat
+        const texNum = (s) => s.replace(/e\+(\d+)/, ' \\times 10^{$1}');
+        function tex(x, asFrac, paren, dig) {
+            const neg = x.n < 0n;
+            if (!asFrac || fIsInt(x)) {
+                const s = texNum(asFrac ? bigStr(x.n) : decStr(x, dig === undefined ? 4 : dig));
+                return (paren >= 1 && neg) ? '\\left(' + s + '\\right)' : s;
+            }
+            const body = (neg ? '-' : '') + '\\frac{' + texNum(bigStr(neg ? -x.n : x.n)) + '}{' + texNum(bigStr(x.d)) + '}';
+            return (paren === 2 || (paren === 1 && neg)) ? '\\left(' + body + '\\right)' : body;
+        }
+        /* PURE-END */
+
+        function readField(id) {
+            const el = document.getElementById(id);
+            const r = parseField(el.value);
+            r.focused = document.activeElement === el;
+            return r;
+        }
+        const isBad = (r) => r.state === 'invalid' || r.state === 'div0';
+        // Isian yang belum lengkap sedang diketik (mis. "3/"): hasil sebelumnya dipertahankan
+        const isTyping = (list) => list.some((r) => r.state === 'invalid' && r.focused);
+
+        function showInvalid(box) {
+            const msg = 'Isian belum valid. Gunakan bilangan bulat, desimal (0.5), atau pecahan (3/5) dengan penyebut tidak nol.';
+            const set = (id, h) => { document.getElementById(id).innerHTML = h; };
+            if (box === 1) {
+                set('out1_un', '—'); set('out1_sn', '—'); set('out1_sequence', '—'); set('out1_steps', msg);
+            } else if (box === 2) {
+                set('out2_r', '—');
+                const b = document.getElementById('out2_badge');
+                b.className = 'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-100 text-rose-800';
+                b.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Tidak Valid';
+                set('out2_steps', msg);
+            } else {
+                const s = document.getElementById('out3_status');
+                s.className = 'px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-100 text-rose-800';
+                s.textContent = 'Tidak Valid';
+                set('out3_s_inf', '—'); set('out3_steps', msg);
+            }
+        }
+
         // --- BOX 1: Un and Sn Calculator ---
         function calculateBox1() {
-            const a = parseFloat(document.getElementById('calc1_a').value) || 0;
-            const r = parseFloat(document.getElementById('calc1_r').value) || 0;
+            const ra = readField('calc1_a'), rr = readField('calc1_r');
+            if (isTyping([ra, rr])) return;
+            if (isBad(ra) || isBad(rr)) return showInvalid(1);
+
             let n = parseInt(document.getElementById('calc1_n').value) || 1;
-            
             if (n < 1) n = 1;
             if (n > 50) n = 50; // Guard limit
 
+            const a = ra.value, r = rr.value;
+            const asFrac = ra.isFrac || rr.isFrac;
+            const T = (x, p, d) => tex(x, asFrac, p, d);
+
             // Un = a * r^(n-1)
-            const Un = a * Math.pow(r, n - 1);
-            
+            const Un = fMul(a, fPow(r, n - 1));
             // Sn = a * (r^n - 1) / (r - 1)
-            let Sn = 0;
-            if (r === 1) {
-                Sn = a * n;
-            } else {
-                Sn = a * (Math.pow(r, n) - 1) / (r - 1);
-            }
+            const rIsOne = fCmp(r, ONE) === 0;
+            const Sn = rIsOne ? fMul(a, F(BigInt(n))) : fDiv(fMul(a, fSub(fPow(r, n), ONE)), fSub(r, ONE));
 
             // Generate Sequence array
             const seq = [];
             for (let i = 1; i <= Math.min(n, 12); i++) {
-                const term = a * Math.pow(r, i - 1);
-                seq.push(Number.isInteger(term) ? term : term.toFixed(2));
+                const term = fMul(a, fPow(r, i - 1));
+                seq.push(asFrac ? valHTML(term, true, false) : (fIsInt(term) ? bigStr(term.n) : decStr(term, 2, false)));
             }
             if (n > 12) seq.push('...');
 
             // Render outputs
-            document.getElementById('out1_un').innerText = formatNum(Un);
-            document.getElementById('out1_sn').innerText = formatNum(Sn);
-            document.getElementById('out1_sequence').innerText = seq.join(', ');
+            document.getElementById('out1_un').innerHTML = valHTML(Un, asFrac, true);
+            document.getElementById('out1_sn').innerHTML = valHTML(Sn, asFrac, true);
+            document.getElementById('out1_sequence').innerHTML = seq.join(', ');
 
             // Render calculation steps
             const stepsHtml = `
-                <div>1. <strong>Suku ke-${n}:</strong> $U_{${n}} = ${a} \\times (${r})^{${n}-1} = ${a} \\times ${formatNum(Math.pow(r, n-1))} = \\mathbf{${formatNum(Un)}}$</div>
-                <div>2. <strong>Jumlah Suku:</strong> ${r === 1 ? `$S_{${n}} = ${a} \\times ${n} = ${formatNum(Sn)}$` : `$S_{${n}} = \\frac{${a} \\times (${r}^{${n}} - 1)}{${r} - 1} = \\mathbf{${formatNum(Sn)}}$`}</div>
+                <div>1. <strong>Suku ke-${n}:</strong> $U_{${n}} = ${T(a, 0, 8)} \\times ${T(r, 2, 8)}^{${n}-1} = ${T(a, 0, 8)} \\times ${T(fPow(r, n - 1), 1)} = \\mathbf{${T(Un)}}$</div>
+                <div>2. <strong>Jumlah Suku:</strong> ${rIsOne ? `$S_{${n}} = ${T(a, 0, 8)} \\times ${n} = \\mathbf{${T(Sn)}}$` : `$S_{${n}} = \\frac{${T(a, 0, 8)} \\times \\left(${T(r, 2, 8)}^{${n}} - 1\\right)}{${T(r, 0, 8)} - 1} = \\mathbf{${T(Sn)}}$`}</div>
             `;
             document.getElementById('out1_steps').innerHTML = stepsHtml;
 
@@ -810,17 +989,21 @@
             }
 
             // Update Live Canvas Chart
-            drawSequenceChart(a, r, n);
+            drawSequenceChart(fToNum(a), fToNum(r), n);
         }
 
         // --- BOX 2: Ratio Calculator ---
         function calculateBox2() {
-            const Un = parseFloat(document.getElementById('calc2_un').value) || 0;
-            const Un_minus_1 = parseFloat(document.getElementById('calc2_un_minus_1').value) || 0;
+            const ru = readField('calc2_un'), rp = readField('calc2_un_minus_1');
+            if (isTyping([ru, rp])) return;
+            if (isBad(ru) || isBad(rp)) return showInvalid(2);
 
+            const Un = ru.value, Up = rp.value;
+            const asFrac = ru.isFrac || rp.isFrac;
+            const T = (x, p, d) => tex(x, asFrac, p, d);
             const badgeEl = document.getElementById('out2_badge');
-            
-            if (Un_minus_1 === 0) {
+
+            if (Up.n === 0n) {
                 document.getElementById('out2_r').innerText = "Tak Terdefinisi (pembagi 0)";
                 badgeEl.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold bg-rose-100 text-rose-800";
                 badgeEl.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Tidak Valid`;
@@ -828,23 +1011,24 @@
                 return;
             }
 
-            const r = Un / Un_minus_1;
-            document.getElementById('out2_r').innerText = formatNum(r);
+            const r = fDiv(Un, Up);
+            document.getElementById('out2_r').innerHTML = valHTML(r, asFrac, true);
 
             // Classify progression behavior
             let statusText = "";
             let badgeStyle = "";
+            const c1 = fCmp(r, ONE);
 
-            if (r > 1) {
+            if (c1 > 0) {
                 statusText = "Barisan Monoton Naik (r > 1)";
                 badgeStyle = "bg-emerald-100 text-emerald-800";
-            } else if (r === 1) {
+            } else if (c1 === 0) {
                 statusText = "Barisan Konstan (r = 1)";
                 badgeStyle = "bg-blue-100 text-blue-800";
-            } else if (r > 0 && r < 1) {
+            } else if (r.n > 0n) {
                 statusText = "Barisan Monoton Meluruh / Mengecil (0 < r < 1)";
                 badgeStyle = "bg-amber-100 text-amber-800";
-            } else if (r < 0) {
+            } else if (r.n < 0n) {
                 statusText = "Barisan Berselang-seling / Tanda Berganti (r < 0)";
                 badgeStyle = "bg-purple-100 text-purple-800";
             } else {
@@ -857,8 +1041,8 @@
 
             // Render calculation steps
             const stepsHtml = `
-                <div>1. <strong>Penghitungan Rasio:</strong> $r = \\frac{U_n}{U_{n-1}} = \\frac{${Un}}{${Un_minus_1}} = \\mathbf{${formatNum(r)}}$</div>
-                <div>2. <strong>Uji Verifikasi:</strong> $U_n = U_{n-1} \\times r \\rightarrow ${Un_minus_1} \\times ${formatNum(r)} = ${Un}$</div>
+                <div>1. <strong>Penghitungan Rasio:</strong> $r = \\frac{U_n}{U_{n-1}} = \\frac{${T(Un, 0, 8)}}{${T(Up, 0, 8)}} = \\mathbf{${T(r)}}$</div>
+                <div>2. <strong>Uji Verifikasi:</strong> $U_n = U_{n-1} \\times r \\rightarrow ${T(Up, 0, 8)} \\times ${T(r, 1)} = ${T(Un, 0, 8)}$</div>
             `;
             document.getElementById('out2_steps').innerHTML = stepsHtml;
 
@@ -869,23 +1053,28 @@
 
         // --- BOX 3: Infinite Series Calculator ---
         function calculateBox3() {
-            const a = parseFloat(document.getElementById('calc3_a').value) || 0;
-            const r = parseFloat(document.getElementById('calc3_r').value) || 0;
+            const ra = readField('calc3_a'), rr = readField('calc3_r');
+            if (isTyping([ra, rr])) return;
+            if (isBad(ra) || isBad(rr)) return showInvalid(3);
+
+            const a = ra.value, r = rr.value;
+            const asFrac = ra.isFrac || rr.isFrac;
+            const T = (x, p, d) => tex(x, asFrac, p, d);
 
             const statusEl = document.getElementById('out3_status');
             const resultEl = document.getElementById('out3_s_inf');
             const stepsEl = document.getElementById('out3_steps');
 
-            if (Math.abs(r) < 1) {
+            if (fCmp(fAbs(r), ONE) < 0) {
                 // Convergent
-                const S_inf = a / (1 - r);
+                const S_inf = fDiv(a, fSub(ONE, r));
                 statusEl.className = "px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-100 text-emerald-800";
                 statusEl.innerText = "Konvergen (|r| < 1)";
-                resultEl.innerText = formatNum(S_inf);
+                resultEl.innerHTML = valHTML(S_inf, asFrac, true);
 
                 stepsEl.innerHTML = `
-                    <div>1. <strong>Syarat Konvergensi:</strong> $|${r}| < 1$ (Terpenuhi)</div>
-                    <div>2. <strong>Penghitungan Jumlah:</strong> $S_\\infty = \\frac{a}{1-r} = \\frac{${a}}{1 - (${r})} = \\frac{${a}}{${formatNum(1-r)}} = \\mathbf{${formatNum(S_inf)}}$</div>
+                    <div>1. <strong>Syarat Konvergensi:</strong> $|${T(r, 0, 8)}| < 1$ (Terpenuhi)</div>
+                    <div>2. <strong>Penghitungan Jumlah:</strong> $S_\\infty = \\frac{a}{1-r} = \\frac{${T(a, 0, 8)}}{1 - ${T(r, 2, 8)}} = \\frac{${T(a, 0, 8)}}{${T(fSub(ONE, r))}} = \\mathbf{${T(S_inf)}}$</div>
                 `;
             } else {
                 // Divergent
@@ -894,7 +1083,7 @@
                 resultEl.innerText = "Tak Terhingga (∞)";
 
                 stepsEl.innerHTML = `
-                    <div class="text-rose-700">1. <strong>Syarat Tidak Terpenuhi:</strong> Nilai $|r| = |${r}| \\ge 1$.</div>
+                    <div class="text-rose-700">1. <strong>Syarat Tidak Terpenuhi:</strong> Nilai $|r| = |${T(r, 0, 8)}| \\ge 1$.</div>
                     <div>2. Nilai suku terus membesar/konstan tanpa batas, sehingga deret tidak memiliki jumlah terhingga ($S_\\infty \\rightarrow \\infty$).</div>
                 `;
             }
@@ -902,6 +1091,73 @@
             if (window.renderMathInElement) {
                 renderMathInElement(stepsEl, window.MATH_OPTS);
             }
+        }
+
+        /* ------------------------------------------------------------
+           Kolom isian yang menerima pecahan: ketik 3/5 lalu tekan spasi
+           -> berubah menjadi pecahan bertingkat. Backspace = kembali
+           ke teks biasa agar bisa diedit.
+           ------------------------------------------------------------ */
+        function initFractionFields() {
+            const FR1 = /\d+(?:[.,]\d+)?\s*\/\s*\d+(?:[.,]\d+)?/;
+            const FRG = /(\d+(?:[.,]\d+)?)\s*\/\s*(\d+(?:[.,]\d+)?)/g;
+            const sanitize = (s) => s.replace(/−/g, '-').replace(/[^0-9.,\/\s+\-]/g, '').replace(/\s+/g, ' ').replace(/^\s+/, '');
+            const viewHTML = (raw) => raw.trim().replace(/^-/, '−').replace(FRG, (m, n, d) => '<span class="frac"><span class="fn">' + n + '</span><span class="fd">' + d + '</span></span>');
+
+            document.querySelectorAll('.mf').forEach((box) => {
+                const input = box.querySelector('input');
+                const view = box.querySelector('.mf-view');
+                const run = () => { const fn = window[box.dataset.calc]; if (typeof fn === 'function') fn(); };
+
+                function render(commit) {
+                    const raw = input.value;
+                    const on = FR1.test(raw) && (commit || /\s$/.test(raw));
+                    box.dataset.view = on ? '1' : '0';
+                    if (on) view.innerHTML = viewHTML(raw);
+                    const st = parseField(raw);
+                    const focused = document.activeElement === input;
+                    const bad = st.state === 'div0' || (st.state === 'invalid' && !focused);
+                    box.dataset.bad = bad ? '1' : '0';
+                    input.setAttribute('aria-invalid', bad ? 'true' : 'false');
+                }
+
+                input.addEventListener('input', () => {
+                    const pos = input.selectionStart;
+                    const before = sanitize(input.value.slice(0, pos));
+                    const clean = sanitize(input.value);
+                    if (clean !== input.value) {
+                        input.value = clean;
+                        const p = Math.min(before.length, clean.length);
+                        input.setSelectionRange(p, p);
+                    }
+                    render(false);
+                    run();
+                });
+                input.addEventListener('focus', () => {
+                    input.value = input.value.replace(/\s+$/, '');
+                    render(false);
+                });
+                input.addEventListener('pointerdown', () => {
+                    if (box.dataset.view === '1') {
+                        input.value = input.value.replace(/\s+$/, '');
+                        render(false);
+                    }
+                });
+                input.addEventListener('blur', () => {
+                    input.value = input.value.trim();
+                    render(true);
+                    run();
+                });
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const raw = input.value;
+                        if (FR1.test(raw) && !/\s$/.test(raw)) input.value = raw + ' ';
+                        render(false);
+                    }
+                });
+                render(false);
+            });
         }
 
         // Utility number formatter
@@ -1005,6 +1261,9 @@
         window.onload = function() {
             // Initialize Carousel
             updateCarousel();
+
+            // Kolom isian pecahan (ketik 3/5 lalu spasi)
+            initFractionFields();
 
             // Run initial calculations
             calculateBox1();
@@ -1123,10 +1382,6 @@ body {
   line-height: 1.55;
   min-height: 100vh;
   background-color: var(--bg);
-  background-image:
-    radial-gradient(1100px 560px at 8% -8%, #e6eef5 0%, transparent 62%),
-    radial-gradient(900px 480px at 100% 0%, #e7efe5 0%, transparent 58%);
-  background-attachment: fixed;
 }
 
 body.has-modal {
@@ -2337,15 +2592,11 @@ sub, sup {
   justify-content: center;
   padding: 16px;
   background: rgba(46, 58, 72, 0);
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  transition: background 0.2s ease, backdrop-filter 0.2s ease;
+  transition: background 0.2s ease;
 }
 
 .modal-overlay.is-open {
-  background: rgba(46, 58, 72, 0.42);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background: rgba(46, 58, 72, 0.5);
 }
 
 .modal {
@@ -3201,35 +3452,28 @@ sub, sup {
 
 .bg-art {
   overflow: hidden;
+  contain: strict;
+  background-image:
+    radial-gradient(1100px 560px at 8% -8%, #e6eef5 0%, transparent 62%),
+    radial-gradient(900px 480px at 100% 0%, #e7efe5 0%, transparent 58%);
 }
 
+/* Latar statis: seukuran layar (bukan 185vmax), tanpa animasi terus-menerus,
+   sehingga blur cukup dirasterisasi sekali dan tidak membebani perangkat. */
 .bg-art svg {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 185vmax;
-  height: 185vmax;
-  transform: translate(-50%, -50%) rotate(-5deg);
-  filter: blur(7px) saturate(0.9);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: scale(1.06);
+  filter: blur(4px) saturate(0.9);
   opacity: 0.7;
-  animation: bgDrift 120s ease-in-out infinite alternate;
-}
-
-@keyframes bgDrift {
-  from {
-    transform: translate(-54%, -52%) rotate(-5deg);
-  }
-  to {
-    transform: translate(-46%, -48%) rotate(-3deg);
-  }
 }
 
 .bg-veil {
   background:
     radial-gradient(900px 520px at 50% 0%, rgba(243, 239, 230, 0.62), transparent 70%),
     rgba(243, 239, 230, 0.42);
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
 }
 
 #app {
@@ -3240,9 +3484,7 @@ sub, sup {
 /* Efek kaca (glassmorphism) */
 .topbar,
 .panel {
-  background: rgba(251, 249, 244, 0.74);
-  -webkit-backdrop-filter: blur(14px) saturate(1.1);
-  backdrop-filter: blur(14px) saturate(1.1);
+  background: rgba(251, 249, 244, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
@@ -3251,9 +3493,7 @@ sub, sup {
 }
 
 .modal {
-  background: rgba(251, 249, 244, 0.93);
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
+  background: rgba(251, 249, 244, 0.97);
 }
 
 .footer {
@@ -3272,11 +3512,9 @@ sub, sup {
   place-items: center;
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 50%;
-  background: rgba(251, 249, 244, 0.8);
+  background: rgba(251, 249, 244, 0.92);
   color: var(--blue-deep);
   box-shadow: var(--shadow-md);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
   transition: transform 0.15s ease, color 0.2s ease;
 }
 
@@ -3301,9 +3539,7 @@ sub, sup {
   z-index: 500;
   display: grid;
   place-items: center;
-  background: rgba(243, 239, 230, 0.86);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
+  background: rgba(243, 239, 230, 0.95);
   transition: opacity 0.35s ease;
 }
 
