@@ -47,6 +47,17 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, window.MATH_OPTS);"></script>
+    <script>
+        /* ============ KONFIGURASI CLOUD BANK SOAL (isi di sini, cukup sekali) ============
+           Dipakai oleh game Geo Leader dan Kuis Kartu di bagian Asesmen.
+           provider: 'none' (bawaan, soal tersimpan di perangkat) | 'firestore' | 'firebase'
+           Guru mengubah soal lewat Mode Guru di dalam game (Ctrl+Shift+G, atau ketuk logo judul 3x). */
+        window.GEO_CLOUD = {
+            provider: 'none',
+            firestore: { projectId: '', apiKey: '', collection: 'game_data', docId: 'bank_soal' },
+            firebase: { databaseURL: '', path: 'geoladder/questionBank' }
+        };
+    </script>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 
@@ -147,7 +158,7 @@
                     <a href="#section-carousel" class="hover:text-indigo-600 transition">Pendahuluan</a>
                     <a href="#section-materi" class="hover:text-indigo-600 transition">Materi & Rumus</a>
                     <a href="#section-kalkulator" class="hover:text-indigo-600 transition">Kalkulator Interaktif</a>
-                    <a href="#section-game" class="hover:text-indigo-600 transition">Geo Leader</a>
+                    <a href="#section-asesmen" class="hover:text-indigo-600 transition">Asesmen</a>
                 </nav>
                 <div class="flex items-center space-x-3">
                     <a href="#section-kalkulator" class="px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition flex items-center gap-2">
@@ -285,7 +296,7 @@
                             <!-- Internal Scroll Box -->
                             <div class="h-56 sm:h-64 overflow-y-auto custom-scrollbar pr-3 space-y-3 text-sm text-slate-600 leading-relaxed">
                                 <p>
-                                    Untuk menjembatani abstraksi rumus matematika dengan pemahaman intuitif siswa, platform GeoSeriesHub dirancang dengan solusi interaktif berbasis web yang menawarkan:
+                                    Untuk menjembatani abstraksi rumus matematika dengan pemahaman intuitif siswa, platform **GeoSeriesHub** dirancang dengan solusi interaktif berbasis web yang menawarkan:
                                 </p>
                                 <ul class="list-disc pl-5 space-y-2 text-slate-700">
                                     <li><strong>Umpan Balik Perhitungan Real-Time:</strong> Siswa dapat mengubah nilai parameter $a$, $r$, dan $n$ secara bebas dan melihat perubahan hasil $U_n$ dan $S_n$ secara instan beserta visualisasi grafisnya.</li>
@@ -312,6 +323,64 @@
                     <button onclick="goToSlide(1)" class="dot w-3 h-3 rounded-full bg-slate-300 transition-all"></button>
                     <button onclick="goToSlide(2)" class="dot w-3 h-3 rounded-full bg-slate-300 transition-all"></button>
                 </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECTION 1B: MATERI PEMBELAJARAN (BALOK GESER) ================= -->
+        <section id="section-pembelajaran" class="scroll-mt-20">
+            <div class="mb-6">
+                <div class="flex items-center gap-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1"><i class="fa-solid fa-book-open"></i> Materi Pembelajaran</div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Belajar Barisan & Deret Geometri</h2>
+                <p class="text-sm text-slate-500 mt-2 max-w-2xl">Geser kotak untuk membaca materi dari konsep dasar sampai deret tak hingga. Tekan ikon <i class="fa-brands fa-youtube text-red-600"></i> di pojok kanan atas kotak untuk menonton video materinya.</p>
+            </div>
+            <div class="relative max-w-4xl mx-auto" data-cr>
+                <div class="overflow-hidden rounded-2xl shadow-xl bg-white border border-slate-200/80" style="touch-action: pan-y pinch-zoom;">
+                    <div class="carousel-track cr-track">
+                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-indigo-50/50 via-white to-indigo-50/30">
+                            <div class="flex items-center justify-between gap-3 pb-4 border-b border-indigo-200/60 mb-4">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-10 h-10 shrink-0 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md">1</div>
+                                    <div class="min-w-0"><h3 class="font-bold text-slate-900 text-lg leading-snug">Pengertian Barisan Geometri & Rasio</h3><p class="text-xs text-indigo-700 font-medium">Bab 1 · Konsep Dasar</p></div>
+                                </div>
+                                <a href="https://www.youtube.com/results?search_query=barisan+geometri+rasio+matematika+SMA" target="_blank" rel="noopener" title="Tonton video materi ini di YouTube" aria-label="Tonton video materi Pengertian Barisan Geometri & Rasio di YouTube" class="shrink-0 w-11 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-md transition"><i class="fa-brands fa-youtube text-2xl"></i></a>
+                            </div>
+                            <div class="h-[26rem] sm:h-[34rem] overflow-y-auto custom-scrollbar pr-3 space-y-3 text-sm text-slate-700 leading-relaxed"><p><strong>Barisan geometri</strong> adalah barisan bilangan yang setiap sukunya diperoleh dengan <strong>mengalikan</strong> suku sebelumnya dengan bilangan tetap yang disebut <strong>rasio</strong> ($r$). Suku pertama dilambangkan $a$ atau $U_1$.</p><div class="p-3 bg-white rounded-xl border border-indigo-100 text-center overflow-x-auto">$$r = \frac{U_2}{U_1} = \frac{U_3}{U_2} = \dots = \frac{U_n}{U_{n-1}}$$</div><p>Bandingkan dengan barisan aritmetika yang memiliki <em>beda</em> tetap (penjumlahan). Pada barisan geometri yang tetap adalah <em>perbandingan</em> (perkalian).</p><div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-100"><p class="font-bold text-indigo-900 text-xs uppercase tracking-wider mb-1">Contoh 1</p><p>Barisan $2, 6, 18, 54, \dots$ memiliki $r = \frac{6}{2} = \frac{18}{6} = 3$, sehingga merupakan barisan geometri naik.</p></div><div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-100"><p class="font-bold text-indigo-900 text-xs uppercase tracking-wider mb-1">Contoh 2</p><p>Barisan $16, 8, 4, 2, \dots$ memiliki $r = \frac{8}{16} = \frac{1}{2}$. Karena $0 < r < 1$, suku-sukunya semakin mengecil.</p></div><div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-100"><p class="font-bold text-indigo-900 text-xs uppercase tracking-wider mb-1">Contoh 3</p><p>Barisan $3, -6, 12, -24, \dots$ memiliki $r = \frac{-6}{3} = -2$. Karena $r < 0$, tanda suku berganti-ganti (positif, negatif, positif, ...).</p></div><p class="font-semibold text-slate-800">Rangkuman:</p><ul class="list-disc pl-5 space-y-1"><li>$r > 1$: barisan naik</li><li>$0 < r < 1$: barisan turun mendekati nol</li><li>$r < 0$: suku berselang-seling tanda</li><li>$r = 1$: semua suku sama (konstan)</li></ul></div>
+                        </div>
+                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-violet-50/50 via-white to-violet-50/30">
+                            <div class="flex items-center justify-between gap-3 pb-4 border-b border-violet-200/60 mb-4">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-10 h-10 shrink-0 rounded-xl bg-violet-600 text-white flex items-center justify-center font-bold text-lg shadow-md">2</div>
+                                    <div class="min-w-0"><h3 class="font-bold text-slate-900 text-lg leading-snug">Rumus Suku ke-n ($U_n$)</h3><p class="text-xs text-violet-700 font-medium">Bab 2 · Menentukan Suku Sembarang</p></div>
+                                </div>
+                                <a href="https://www.youtube.com/results?search_query=rumus+suku+ke-n+barisan+geometri" target="_blank" rel="noopener" title="Tonton video materi ini di YouTube" aria-label="Tonton video materi Rumus Suku ke-n ($U_n$) di YouTube" class="shrink-0 w-11 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-md transition"><i class="fa-brands fa-youtube text-2xl"></i></a>
+                            </div>
+                            <div class="h-[26rem] sm:h-[34rem] overflow-y-auto custom-scrollbar pr-3 space-y-3 text-sm text-slate-700 leading-relaxed"><p>Perhatikan pola pembentukan suku: $U_1 = a$, $U_2 = a \cdot r$, $U_3 = a \cdot r^2$, $U_4 = a \cdot r^3$. Pangkat dari $r$ selalu <strong>satu lebih kecil</strong> dari nomor suku, sehingga:</p><div class="p-3 bg-white rounded-xl border border-violet-100 text-center overflow-x-auto">$$U_n = a \cdot r^{\,n-1}$$</div><p>Keterangan: $a$ = suku pertama, $r$ = rasio, $n$ = nomor suku. Hati-hati: yang dipangkatkan hanya $r$, bukan $(a \cdot r)$.</p><div class="p-3 bg-violet-50/70 rounded-xl border border-violet-100"><p class="font-bold text-violet-900 text-xs uppercase tracking-wider mb-1">Contoh 1</p><p>Tentukan suku ke-8 dari $3, 6, 12, \dots$</p><p>$a = 3$, $r = 2$, maka $U_8 = 3 \cdot 2^{7} = 3 \cdot 128 = 384$.</p></div><div class="p-3 bg-violet-50/70 rounded-xl border border-violet-100"><p class="font-bold text-violet-900 text-xs uppercase tracking-wider mb-1">Contoh 2</p><p>Diketahui $U_2 = 6$ dan $U_5 = 48$. Tentukan $a$ dan $r$.</p><p>$\frac{U_5}{U_2} = \frac{a r^4}{a r} = r^3 = \frac{48}{6} = 8$, sehingga $r = 2$. Lalu $a = \frac{U_2}{r} = \frac{6}{2} = 3$.</p></div><p class="font-semibold text-slate-800">Tips:</p><ul class="list-disc pl-5 space-y-1"><li>Untuk mencari $r$ dari dua suku, bagi suku yang lebih besar nomornya dengan yang lebih kecil.</li><li>Selisih nomor suku menjadi pangkat dari $r$.</li></ul></div>
+                        </div>
+                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-emerald-50/50 via-white to-emerald-50/30">
+                            <div class="flex items-center justify-between gap-3 pb-4 border-b border-emerald-200/60 mb-4">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-10 h-10 shrink-0 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-md">3</div>
+                                    <div class="min-w-0"><h3 class="font-bold text-slate-900 text-lg leading-snug">Deret Geometri & Jumlah n Suku ($S_n$)</h3><p class="text-xs text-emerald-700 font-medium">Bab 3 · Menjumlahkan Suku-suku</p></div>
+                                </div>
+                                <a href="https://www.youtube.com/results?search_query=deret+geometri+jumlah+n+suku+pertama" target="_blank" rel="noopener" title="Tonton video materi ini di YouTube" aria-label="Tonton video materi Deret Geometri & Jumlah n Suku ($S_n$) di YouTube" class="shrink-0 w-11 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-md transition"><i class="fa-brands fa-youtube text-2xl"></i></a>
+                            </div>
+                            <div class="h-[26rem] sm:h-[34rem] overflow-y-auto custom-scrollbar pr-3 space-y-3 text-sm text-slate-700 leading-relaxed"><p><strong>Deret geometri</strong> adalah penjumlahan suku-suku barisan geometri: $S_n = U_1 + U_2 + \dots + U_n$. Jumlah $n$ suku pertama dihitung dengan:</p><div class="p-3 bg-white rounded-xl border border-emerald-100 text-center overflow-x-auto">$$S_n = \frac{a\,(r^n - 1)}{r - 1}\quad (r > 1) \qquad S_n = \frac{a\,(1 - r^n)}{1 - r}\quad (r < 1)$$</div><p>Jika $r = 1$ maka semua suku sama, sehingga $S_n = n \cdot a$. Kedua rumus di atas sebenarnya sama, hanya dipilih agar penyebut bernilai positif.</p><div class="p-3 bg-emerald-50/70 rounded-xl border border-emerald-100"><p class="font-bold text-emerald-900 text-xs uppercase tracking-wider mb-1">Contoh 1</p><p>Hitung $2 + 6 + 18 + 54 + 162$.</p><p>$a = 2$, $r = 3$, $n = 5$: $S_5 = \frac{2(3^5 - 1)}{3 - 1} = \frac{2 \cdot 242}{2} = 242$.</p></div><div class="p-3 bg-emerald-50/70 rounded-xl border border-emerald-100"><p class="font-bold text-emerald-900 text-xs uppercase tracking-wider mb-1">Contoh 2</p><p>Hitung $64 + 32 + 16 + 8$.</p><p>$a = 64$, $r = \frac{1}{2}$, $n = 4$: $S_4 = \frac{64\left(1 - \left(\frac{1}{2}\right)^4\right)}{1 - \frac{1}{2}} = \frac{64 \cdot \frac{15}{16}}{\frac{1}{2}} = 120$.</p></div><p>Hubungan penting: $U_n = S_n - S_{n-1}$.</p></div>
+                        </div>
+                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-rose-50/50 via-white to-rose-50/30">
+                            <div class="flex items-center justify-between gap-3 pb-4 border-b border-rose-200/60 mb-4">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-10 h-10 shrink-0 rounded-xl bg-rose-600 text-white flex items-center justify-center font-bold text-lg shadow-md">4</div>
+                                    <div class="min-w-0"><h3 class="font-bold text-slate-900 text-lg leading-snug">Deret Geometri Tak Hingga</h3><p class="text-xs text-rose-700 font-medium">Bab 4 · Konvergen & Divergen</p></div>
+                                </div>
+                                <a href="https://www.youtube.com/results?search_query=deret+geometri+tak+hingga+konvergen+divergen" target="_blank" rel="noopener" title="Tonton video materi ini di YouTube" aria-label="Tonton video materi Deret Geometri Tak Hingga di YouTube" class="shrink-0 w-11 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-md transition"><i class="fa-brands fa-youtube text-2xl"></i></a>
+                            </div>
+                            <div class="h-[26rem] sm:h-[34rem] overflow-y-auto custom-scrollbar pr-3 space-y-3 text-sm text-slate-700 leading-relaxed"><p>Jika suku-suku deret terus ditambahkan tanpa henti, jumlahnya hanya bisa mendekati bilangan tertentu apabila suku-sukunya makin kecil, yaitu saat <strong>$-1 < r < 1$</strong>. Deret seperti ini disebut <strong>konvergen</strong>.</p><div class="p-3 bg-white rounded-xl border border-rose-100 text-center overflow-x-auto">$$S_\infty = \frac{a}{1 - r}\qquad (|r| < 1)$$</div><p>Jika $|r| \ge 1$, jumlah suku terus membesar (atau tidak menuju satu nilai), sehingga deret <strong>divergen</strong> dan tidak mempunyai jumlah tak hingga.</p><div class="p-3 bg-rose-50/70 rounded-xl border border-rose-100"><p class="font-bold text-rose-900 text-xs uppercase tracking-wider mb-1">Contoh 1</p><p>Hitung $8 + 4 + 2 + 1 + \dots$</p><p>$a = 8$, $r = \frac{1}{2}$, sehingga $S_\infty = \frac{8}{1 - \frac{1}{2}} = 16$.</p></div><div class="p-3 bg-rose-50/70 rounded-xl border border-rose-100"><p class="font-bold text-rose-900 text-xs uppercase tracking-wider mb-1">Contoh 2 (bola pantul)</p><p>Bola dijatuhkan dari ketinggian 10 m dan memantul setinggi $\frac{3}{4}$ tinggi sebelumnya. Panjang seluruh lintasan?</p><p>Lintasan turun pertama 10 m. Lintasan naik: $7{,}5 + 5{,}625 + \dots$ dengan $a = 7{,}5$ dan $r = \frac{3}{4}$, jumlahnya $\frac{7{,}5}{1 - \frac{3}{4}} = 30$ m. Setiap pantulan juga turun dengan jarak sama, sehingga total $= 10 + 2 \cdot 30 = 70$ m.</p></div><div class="p-3 bg-rose-50/70 rounded-xl border border-rose-100"><p class="font-bold text-rose-900 text-xs uppercase tracking-wider mb-1">Contoh 3</p><p>Deret $3 + 6 + 12 + \dots$ memiliki $r = 2$, sehingga $|r| \ge 1$ dan deret <strong>divergen</strong>.</p></div></div>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" data-prev class="absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition focus:outline-none z-10 -left-4 sm:-left-6" aria-label="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button><button type="button" data-next class="absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition focus:outline-none z-10 -right-4 sm:-right-6" aria-label="Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+                <div class="flex justify-center items-center gap-2 mt-4"><button type="button" class="cr-dot h-3 rounded-full bg-slate-300 w-3 transition-all" aria-label="Kartu 1"></button><button type="button" class="cr-dot h-3 rounded-full bg-slate-300 w-3 transition-all" aria-label="Kartu 2"></button><button type="button" class="cr-dot h-3 rounded-full bg-slate-300 w-3 transition-all" aria-label="Kartu 3"></button><button type="button" class="cr-dot h-3 rounded-full bg-slate-300 w-3 transition-all" aria-label="Kartu 4"></button></div>
             </div>
         </section>
 
@@ -666,57 +735,73 @@
         </section>
 
 
-        <!-- ================= SECTION 4: PORTAL GEO LEADER ================= -->
-        <section id="section-game" class="scroll-mt-20" aria-labelledby="geoPortalTitle">
-            <div class="geo-portal relative overflow-hidden rounded-3xl text-white shadow-2xl ring-1 ring-white/10 bg-gradient-to-br from-indigo-950 via-[#25245a] to-[#1f3d3b]">
-                <!-- dekor atmosferik -->
-                <div class="absolute inset-0 opacity-[0.12] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none" aria-hidden="true"></div>
-                <div class="absolute -left-24 -top-24 w-80 h-80 rounded-full bg-indigo-500/25 blur-3xl pointer-events-none" aria-hidden="true"></div>
-                <div class="absolute -right-16 -bottom-24 w-96 h-96 rounded-full bg-[#9db8a0]/25 blur-3xl pointer-events-none" aria-hidden="true"></div>
-
-                <div class="relative z-10 grid lg:grid-cols-5 gap-10 items-center p-6 sm:p-10 lg:p-14">
-                    <div class="lg:col-span-3 text-center lg:text-left">
-                        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold bg-[#b9cdb0]/15 text-[#cfe0c6] border border-[#b9cdb0]/30 backdrop-blur-sm">
-                            <i class="fa-solid fa-chess-board"></i> Geo Leader &middot; Arena Strategi Kartu
-                        </span>
-                        <h2 id="geoPortalTitle" class="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-                            Bukan Sekadar Keberuntungan,
-                            <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 via-violet-200 to-[#cfe0c6]">Ini Adalah Panggung Strategi dan Logikamu!</span>
-                        </h2>
-                        <p class="mt-5 text-slate-200/90 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
-                            Buktikan pemahaman konsep <strong class="text-white">Barisan &amp; Deret Geometri</strong> melalui setiap langkah kartu dan tantangan di Geo Leader.
-                        </p>
-                        <p class="mt-3 text-lg sm:text-xl font-bold text-amber-200">Siap menjadi Pemimpin Papan Permainan?</p>
-
-                        <ul class="mt-6 flex flex-wrap justify-center lg:justify-start gap-2 text-xs font-semibold text-slate-100">
-                            <li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm"><i class="fa-solid fa-users text-[#b9cdb0] mr-1.5"></i>2&ndash;4 pemain</li>
-                            <li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm"><i class="fa-solid fa-clone text-[#b9cdb0] mr-1.5"></i>Kartu 1&ndash;6, tanpa dadu</li>
-                            <li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm"><i class="fa-solid fa-stairs text-[#b9cdb0] mr-1.5"></i>Kartu Tangga &amp; Tukar</li>
-                            <li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 backdrop-blur-sm"><i class="fa-solid fa-layer-group text-[#b9cdb0] mr-1.5"></i>Soal Mudah &rarr; Sulit</li>
-                        </ul>
-
-                        <div class="mt-8 flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start">
-                            <button id="geoStartBtn" type="button" aria-haspopup="dialog" class="geo-cta group inline-flex items-center gap-3 px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 text-white text-base sm:text-lg font-extrabold transition focus:outline-none focus-visible:ring-4 focus-visible:ring-[#b9cdb0]/60">
-                                <span>&#128640; Mulai Permainan Geo Leader</span>
-                                <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
-                            </button>
-                            <span class="text-xs text-slate-300">Dimainkan bergiliran di satu perangkat</span>
-                        </div>
+        <!-- ================= SECTION 5: ASESMEN (KUIS KARTU & GEO LEADER) ================= -->
+        <section id="section-asesmen" class="scroll-mt-20" aria-labelledby="asTitle">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="text-xs font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-3 py-1 rounded-full border border-rose-100">Asesmen</span>
+                <h2 id="asTitle" class="text-3xl font-extrabold text-slate-900 mt-2">Uji Pemahamanmu</h2>
+                <p class="text-slate-600 text-sm mt-2">Pilih salah satu: kerjakan kuis kartu, atau buktikan logikamu lewat game ular tangga Geo Leader.</p>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                <div class="relative overflow-hidden rounded-3xl text-white shadow-2xl ring-1 ring-white/10 bg-gradient-to-br from-rose-900 via-[#4a2147] to-indigo-950 p-7 sm:p-9 flex flex-col">
+                    <div class="absolute inset-0 opacity-[0.12] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none" aria-hidden="true"></div>
+                    <div class="relative z-10 flex flex-col flex-1 text-center md:text-left">
+                        <span class="inline-flex items-center gap-2 self-center md:self-start px-3 py-1.5 rounded-full text-xs font-bold bg-[#b9cdb0]/15 text-[#cfe0c6] border border-[#b9cdb0]/30"><i class="fa-solid fa-clone"></i> Kuis Kartu</span>
+                        <h3 class="mt-4 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">Kuis Kartu Barisan &amp; Deret Geometri</h3>
+                        <p class="mt-3 text-sm text-slate-200/90 leading-relaxed">Jawab 5 soal dengan menggeser kartu, lihat pembahasan setiap soal, lalu dapatkan skormu dalam bentuk persen.</p>
+                        <ul class="mt-5 flex flex-wrap justify-center md:justify-start gap-2"><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-list-check text-[#b9cdb0] mr-1.5"></i>5 soal pilihan ganda</li><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-lightbulb text-[#b9cdb0] mr-1.5"></i>Ada pembahasan</li><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-percent text-[#b9cdb0] mr-1.5"></i>Skor dalam persen</li></ul>
+                        <div class="mt-auto pt-8"><button id="quizStartBtn" type="button" aria-haspopup="dialog" class="group inline-flex items-center gap-3 px-7 py-4 rounded-2xl bg-gradient-to-r from-rose-500 to-orange-400 hover:brightness-105 text-white text-base font-extrabold shadow-lg transition"><span>Mulai Kuis</span><i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i></button></div>
                     </div>
-
-                    <!-- visual kartu melayang -->
-                    <div class="lg:col-span-2 relative h-72 sm:h-80 w-full max-w-sm mx-auto" aria-hidden="true">
-                        <div class="geo-card" style="--x:-96px;--y:14px;--r:-14deg;--d:0s">2</div>
-                        <div class="geo-card" style="--x:-32px;--y:-6px;--r:-5deg;--d:.8s">5</div>
-                        <div class="geo-card sage" style="--x:34px;--y:6px;--r:6deg;--d:1.6s"><i class="fa-solid fa-stairs"></i></div>
-                        <div class="geo-card" style="--x:98px;--y:26px;--r:15deg;--d:2.4s">3</div>
-                        <div class="absolute left-1/2 -translate-x-1/2 bottom-0 px-4 py-2 rounded-xl text-sm bg-white/10 border border-white/20 backdrop-blur-md whitespace-nowrap">
-                            $U_n = a \cdot r^{\,n-1}$
-                        </div>
+                </div>
+                <div class="relative overflow-hidden rounded-3xl text-white shadow-2xl ring-1 ring-white/10 bg-gradient-to-br from-indigo-950 via-[#25245a] to-[#1f3d3b] p-7 sm:p-9 flex flex-col">
+                    <div class="absolute inset-0 opacity-[0.12] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none" aria-hidden="true"></div>
+                    <div class="relative z-10 flex flex-col flex-1 text-center md:text-left">
+                        <span class="inline-flex items-center gap-2 self-center md:self-start px-3 py-1.5 rounded-full text-xs font-bold bg-[#b9cdb0]/15 text-[#cfe0c6] border border-[#b9cdb0]/30"><i class="fa-solid fa-chess-board"></i> Geo Leader</span>
+                        <h3 class="mt-4 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">Geo Leader: Ular Tangga Geometri</h3>
+                        <p class="mt-3 text-sm text-slate-200/90 leading-relaxed">Bukan sekadar keberuntungan: maju di papan lewat strategi kartu dan jawaban soal barisan dan deret geometri.</p>
+                        <ul class="mt-5 flex flex-wrap justify-center md:justify-start gap-2"><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-users text-[#b9cdb0] mr-1.5"></i>2&ndash;4 pemain</li><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-clone text-[#b9cdb0] mr-1.5"></i>Kartu 1&ndash;6, tanpa dadu</li><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-layer-group text-[#b9cdb0] mr-1.5"></i>Soal mudah &rarr; sulit</li></ul>
+                        <div class="mt-auto pt-8"><button id="geoStartBtn" type="button" aria-haspopup="dialog" class="geo-cta group inline-flex items-center gap-3 px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 text-white text-base font-extrabold shadow-lg transition"><span>Mulai Geo Leader</span><i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i></button></div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Arena kuis (layar penuh, seperti arena Geo Leader) -->
+        <div id="quizArena" class="hidden fixed inset-0 z-[100] flex-col bg-slate-100" role="dialog" aria-modal="true" aria-label="Kuis Kartu">
+            <div class="flex items-center justify-between gap-3 px-3 sm:px-5 h-14 shrink-0 bg-indigo-950 text-white border-b border-white/10">
+                <button id="quizBackBtn" type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white"><i class="fa-solid fa-arrow-left"></i> <span>Keluar</span></button>
+                <span class="font-extrabold tracking-tight">Kuis <span class="text-[#b9cdb0]">Kartu</span></span>
+                <span id="quizProgress" class="text-xs font-semibold text-slate-300 w-24 text-right" aria-live="polite"></span>
+            </div>
+            <div class="flex-1 min-h-0 overflow-y-auto">
+                <div class="max-w-3xl mx-auto px-6 py-6 sm:py-10">
+                    <div id="quizPlay">
+                        <div id="quizCr" class="relative" data-cr>
+                            <div class="overflow-hidden rounded-2xl shadow-xl bg-white border border-slate-200/80" style="touch-action: pan-y pinch-zoom;">
+                                <div id="quizTrack" class="carousel-track cr-track"></div>
+                            </div>
+                            <button type="button" data-prev class="absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition focus:outline-none z-10 -left-3 sm:-left-6" aria-label="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button><button type="button" data-next class="absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition focus:outline-none z-10 -right-3 sm:-right-6" aria-label="Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+                            <div class="flex justify-center items-center gap-2 mt-4" id="quizDots"></div>
+                        </div>
+                        <div class="text-center mt-6">
+                            <button id="quizFinishBtn" type="button" class="hidden px-7 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold shadow-lg transition"><i class="fa-solid fa-flag-checkered mr-2"></i>Lihat Skor</button>
+                        </div>
+                    </div>
+                    <div id="quizResult" class="hidden bg-white rounded-3xl shadow-xl border border-slate-200 p-8 sm:p-10 text-center">
+                        <i id="quizResIcon" class="fa-solid fa-trophy text-5xl"></i>
+                        <p class="mt-4 text-xs font-bold uppercase tracking-wider text-slate-500">Hasil Kuismu</p>
+                        <p id="quizResPct" class="mt-1 text-6xl sm:text-7xl font-extrabold text-slate-900">0%</p>
+                        <p id="quizResCount" class="mt-1 text-sm font-semibold text-slate-600"></p>
+                        <h3 id="quizResTitle" class="mt-6 text-2xl font-extrabold text-slate-900"></h3>
+                        <p id="quizResMsg" class="mt-2 text-slate-600 leading-relaxed max-w-md mx-auto"></p>
+                        <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                            <button id="quizRetryBtn" type="button" class="px-6 py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold transition"><i class="fa-solid fa-rotate-right mr-2"></i>Ulangi Kuis</button>
+                            <button id="quizDoneBtn" type="button" class="px-6 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-200 transition">Selesai</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </main>
 
@@ -7920,6 +8005,7 @@ sub, sup {
             const backBtn = document.getElementById('geoBackBtn');
             let loaded = false, isOpen = false, lastFocus = null, hideTimer = null;
 
+            const injectCloud = (doc) => doc.replace(/    cloud: \{[\s\S]*?\n    \},/, () => '    cloud: ' + JSON.stringify(Object.assign({ timeoutMs: 6000, pollMs: 30000 }, window.GEO_CLOUD)) + ',');
             const decode = (s) => s.replace(/<\\(\/?script|!--)/gi, '<$1');
             const post = (msg) => { try { frame.contentWindow && frame.contentWindow.postMessage(msg, '*'); } catch (e) { /* abaikan */ } };
 
@@ -7934,7 +8020,7 @@ sub, sup {
                         loading.classList.add('hidden');
                         try { frame.contentWindow.focus(); } catch (e) { /* abaikan */ }
                     }, { once: true });
-                    frame.srcdoc = decode(document.getElementById('geoLeaderDoc').textContent);
+                    frame.srcdoc = injectCloud(decode(document.getElementById('geoLeaderDoc').textContent));
                 } else {
                     post({ type: 'geo-pause', paused: false });
                 }
@@ -7956,7 +8042,7 @@ sub, sup {
                 }, 280);
                 document.documentElement.classList.remove('overflow-hidden');
                 if (lastFocus && lastFocus.focus) lastFocus.focus();
-                document.getElementById('section-game').scrollIntoView({ block: 'center' });
+                document.getElementById('section-asesmen').scrollIntoView({ block: 'center' });
             }
 
             startBtn.addEventListener('click', openArena);
@@ -7969,5 +8055,197 @@ sub, sup {
             });
         })();
     </script>
+
+<script>
+/* Balok geser untuk Materi & Kuis (geser horizontal saja, tidak mengganggu scroll vertikal) */
+function initCr(root) {
+    const track = root.querySelector('.cr-track');
+    const st = root._cr || (root._cr = { i: 0, bound: false });
+    const dots = () => Array.from(root.querySelectorAll('.cr-dot'));
+    st.go = (k) => {
+        const n = track.children.length || 1;
+        st.i = (k + n) % n;
+        track.style.transform = 'translateX(-' + (st.i * 100) + '%)';
+        dots().forEach((d, j) => {
+            d.classList.toggle('bg-indigo-600', j === st.i); d.classList.toggle('w-6', j === st.i);
+            d.classList.toggle('bg-slate-300', j !== st.i); d.classList.toggle('w-3', j !== st.i);
+        });
+    };
+    if (!st.bound) {
+        st.bound = true;
+        root.querySelector('[data-prev]').onclick = () => st.go(st.i - 1);
+        root.querySelector('[data-next]').onclick = () => st.go(st.i + 1);
+        root.addEventListener('click', (e) => {
+            const d = e.target.closest ? e.target.closest('.cr-dot') : null;
+            if (d) st.go(dots().indexOf(d));
+        });
+        let x0 = 0, y0 = 0, sc = null, sT = 0;
+        const vp = track.parentElement;
+        vp.addEventListener('touchstart', (e) => {
+            const t = e.changedTouches[0]; x0 = t.screenX; y0 = t.screenY;
+            sc = e.target.closest ? e.target.closest('.custom-scrollbar') : null; sT = sc ? sc.scrollTop : 0;
+        }, { passive: true });
+        vp.addEventListener('touchend', (e) => {
+            const t = e.changedTouches[0], dx = t.screenX - x0, dy = t.screenY - y0;
+            if (sc && sc.scrollTop !== sT) return;
+            if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 2) return;
+            st.go(dx < 0 ? st.i + 1 : st.i - 1);
+        }, { passive: true });
+    }
+    st.go(0);
+}
+
+/* Memuat soal kuis dari bank soal cloud (Firestore / Realtime Database). Gagal atau belum diisi -> null. */
+function geoLoadCloudQuiz() {
+    const C = window.GEO_CLOUD || {};
+    const fs = (v) => {
+        if ('stringValue' in v) return v.stringValue;
+        if ('integerValue' in v) return Number(v.integerValue);
+        if ('doubleValue' in v) return v.doubleValue;
+        if ('booleanValue' in v) return v.booleanValue;
+        if ('arrayValue' in v) return (v.arrayValue.values || []).map(fs);
+        if ('mapValue' in v) { const o = {}, f = v.mapValue.fields || {}; Object.keys(f).forEach((k) => { o[k] = fs(f[k]); }); return o; }
+        return null;
+    };
+    let url, parse;
+    if (C.provider === 'firestore' && C.firestore && C.firestore.projectId && C.firestore.apiKey) {
+        const f = C.firestore;
+        url = 'https://firestore.googleapis.com/v1/projects/' + encodeURIComponent(f.projectId) + '/databases/(default)/documents/' + (f.collection || 'game_data') + '/' + (f.docId || 'bank_soal') + '?key=' + encodeURIComponent(f.apiKey);
+        parse = (d) => (d && d.fields ? fs({ mapValue: { fields: d.fields } }) : null);
+    } else if (C.provider === 'firebase' && C.firebase && C.firebase.databaseURL) {
+        url = C.firebase.databaseURL.replace(/\/+$/, '') + '/' + (C.firebase.path || 'geoladder/questionBank').replace(/^\/+|\/+$/g, '') + '.json';
+        parse = (d) => d;
+    } else {
+        return Promise.resolve(null);
+    }
+    const ctl = new AbortController();
+    const timer = setTimeout(() => ctl.abort(), C.timeoutMs || 6000);
+    const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((p) => p[1]);
+    return fetch(url, { signal: ctl.signal })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+            clearTimeout(timer);
+            const doc = d && parse(d);
+            let list = doc && doc.questions;
+            if (list && !Array.isArray(list)) list = Object.values(list);
+            if (!list) return null;
+            const ok = list.filter((x) => x && x.text && Array.isArray(x.options) && x.options.length >= 2 && typeof x.answer === 'number');
+            const pick = (lv, k) => shuffle(ok.filter((x) => x.level === lv)).slice(0, k);
+            let chosen = pick('easy', 2).concat(pick('medium', 2), pick('hard', 1));
+            if (chosen.length < 5) chosen = chosen.concat(shuffle(ok.filter((x) => chosen.indexOf(x) < 0))).slice(0, 5);
+            return chosen.length ? chosen.map((x) => ({ q: x.text, o: x.options, a: x.answer, e: x.explanation || '' })) : null;
+        })
+        .catch(() => null);
+}
+
+/* Kuis kartu: tombol Mulai Kuis -> kartu geser -> skor persen + kata motivasi */
+(function () {
+    const DEFAULT_Q = [
+        { q: 'Rasio dari barisan $2, 6, 18, 54, \\dots$ adalah ...', o: ['2', '3', '4', '6'], a: 1, e: '$r = \\frac{6}{2} = 3$. Cek: $\\frac{18}{6} = 3$ dan $\\frac{54}{18} = 3$.' },
+        { q: 'Suku ke-4 barisan geometri dengan $a = 5$ dan $r = 2$ adalah ...', o: ['20', '30', '40', '80'], a: 2, e: '$U_4 = 5 \\cdot 2^{3} = 5 \\cdot 8 = 40$.' },
+        { q: 'Pada barisan geometri, $U_3 = 12$ dan $U_6 = 96$. Rasionya adalah ...', o: ['2', '3', '4', '8'], a: 0, e: '$\\frac{U_6}{U_3} = r^3 = \\frac{96}{12} = 8$, sehingga $r = 2$.' },
+        { q: 'Jumlah 5 suku pertama deret $2 + 6 + 18 + \\dots$ adalah ...', o: ['162', '242', '486', '728'], a: 1, e: '$S_5 = \\frac{2(3^5 - 1)}{3 - 1} = \\frac{2 \\cdot 242}{2} = 242$.' },
+        { q: 'Jumlah tak hingga deret $8 + 4 + 2 + 1 + \\dots$ adalah ...', o: ['12', '14', '16', 'Tak terhingga'], a: 2, e: '$|r| = \\frac{1}{2} < 1$, maka $S_\\infty = \\frac{8}{1 - \\frac{1}{2}} = 16$.' }
+    ];
+    /* [persen minimal, ikon, warna, judul, pesan] */
+    const MSG = [
+        [100, 'fa-trophy', 'text-amber-500', 'Sempurna!', 'Semua jawabanmu benar. Kamu sudah sangat memahami barisan dan deret geometri. Pertahankan, lalu tantang dirimu di Geo Leader!'],
+        [80, 'fa-star', 'text-emerald-500', 'Hebat!', 'Pemahamanmu sudah baik. Tinggal sedikit lagi: baca pembahasan soal yang masih salah supaya semakin mantap.'],
+        [60, 'fa-thumbs-up', 'text-sky-500', 'Cukup Baik', 'Konsep dasarnya sudah kamu kuasai. Ulangi bagian rumus pada materi, lalu coba kuis lagi untuk hasil yang lebih tinggi.'],
+        [40, 'fa-book-open', 'text-orange-500', 'Terus Berlatih', 'Kamu sudah mulai paham, tetapi masih perlu latihan. Baca ulang materi dan tonton videonya, lalu coba lagi.'],
+        [0, 'fa-heart', 'text-rose-500', 'Jangan Menyerah', 'Belajar itu proses, dan setiap kesalahan adalah petunjuk. Mulailah lagi dari Bab 1 dan kerjakan kuis ini pelan-pelan.']
+    ];
+    const $ = (id) => document.getElementById(id);
+    const arena = $('quizArena'), track = $('quizTrack'), root = $('quizCr');
+    const letters = ['A', 'B', 'C', 'D', 'E'];
+    let isOpen = false, lastFocus = null, runId = 0, score = 0, done = 0, total = 0;
+
+    initCr(document.querySelector('#section-pembelajaran [data-cr]'));
+
+    function showResult() {
+        const pct = Math.round((score / total) * 100);
+        const m = MSG.find((x) => pct >= x[0]);
+        $('quizResIcon').className = 'fa-solid ' + m[1] + ' text-5xl ' + m[2];
+        $('quizResPct').textContent = pct + '%';
+        $('quizResCount').textContent = 'Benar ' + score + ' dari ' + total + ' soal';
+        $('quizResTitle').textContent = m[3];
+        $('quizResMsg').textContent = m[4];
+        $('quizPlay').classList.add('hidden');
+        $('quizResult').classList.remove('hidden');
+        $('quizProgress').textContent = '';
+    }
+
+    function build(Q) {
+        score = 0; done = 0; total = Q.length;
+        track.innerHTML = '';
+        $('quizFinishBtn').classList.add('hidden');
+        $('quizProgress').textContent = '0 / ' + total + ' terjawab';
+        Q.forEach((it, qi) => {
+            const slide = document.createElement('div');
+            slide.className = 'w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-rose-50/50 via-white to-rose-50/30';
+            slide.innerHTML =
+                '<div class="flex items-center justify-between pb-4 border-b border-rose-200/60 mb-4"><span class="text-xs font-bold text-rose-700 uppercase tracking-wider">Soal ' + (qi + 1) + ' dari ' + total + '</span><i class="fa-solid fa-pen-to-square text-rose-400"></i></div>' +
+                '<p class="font-semibold text-slate-900 mb-4">' + it.q + '</p>' +
+                '<div class="space-y-2">' + it.o.map((t, oi) => '<button type="button" data-o="' + oi + '" class="w-full text-left px-4 py-3 rounded-xl border border-slate-200 bg-white text-sm hover:border-indigo-300 transition"><span class="font-bold text-indigo-600 mr-2">' + letters[oi] + '.</span>' + t + '</button>').join('') + '</div>' +
+                '<div class="mt-4 hidden p-3 rounded-xl text-sm" data-fb></div>';
+            const btns = Array.from(slide.querySelectorAll('[data-o]'));
+            btns.forEach((b) => b.addEventListener('click', () => {
+                const pick = +b.dataset.o, ok = pick === it.a;
+                btns.forEach((x, k) => {
+                    x.disabled = true; x.classList.add('cursor-default');
+                    if (k === it.a) x.classList.add('bg-emerald-50', 'border-emerald-400');
+                    else if (k === pick) x.classList.add('bg-rose-50', 'border-rose-400');
+                });
+                const fb = slide.querySelector('[data-fb]');
+                fb.className = 'mt-4 p-3 rounded-xl text-sm ' + (ok ? 'bg-emerald-50 text-emerald-900' : 'bg-rose-50 text-rose-900');
+                fb.innerHTML = '<strong>' + (ok ? 'Benar!' : 'Belum tepat.') + '</strong> ' + (it.e || '');
+                if (window.renderMathInElement) renderMathInElement(fb, window.MATH_OPTS);
+                if (ok) score++;
+                done++;
+                $('quizProgress').textContent = done + ' / ' + total + ' terjawab';
+                if (done === total) $('quizFinishBtn').classList.remove('hidden');
+            }));
+            track.appendChild(slide);
+        });
+        $('quizDots').innerHTML = Q.map((_, k) => '<button type="button" class="cr-dot h-3 rounded-full bg-slate-300 w-3 transition-all" aria-label="Soal ' + (k + 1) + '"></button>').join('');
+        initCr(root);
+        if (window.renderMathInElement) renderMathInElement(track, window.MATH_OPTS);
+    }
+
+    function start() {
+        const my = ++runId;
+        $('quizResult').classList.add('hidden');
+        $('quizPlay').classList.remove('hidden');
+        $('quizFinishBtn').classList.add('hidden');
+        $('quizDots').innerHTML = '';
+        $('quizProgress').textContent = '';
+        track.innerHTML = '<div class="w-full flex-shrink-0 p-8 text-center text-sm text-slate-500">Memuat soal\u2026</div>';
+        initCr(root);
+        geoLoadCloudQuiz().then((c) => { if (my === runId && isOpen) build(c || DEFAULT_Q); });
+    }
+    function open() {
+        if (isOpen) return;
+        isOpen = true; lastFocus = document.activeElement;
+        arena.classList.remove('hidden'); arena.classList.add('flex');
+        document.documentElement.classList.add('overflow-hidden');
+        start();
+        $('quizBackBtn').focus();
+    }
+    function close() {
+        if (!isOpen) return;
+        isOpen = false; runId++;
+        arena.classList.add('hidden'); arena.classList.remove('flex');
+        document.documentElement.classList.remove('overflow-hidden');
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+        $('section-asesmen').scrollIntoView({ block: 'center' });
+    }
+    $('quizStartBtn').addEventListener('click', open);
+    $('quizBackBtn').addEventListener('click', close);
+    $('quizDoneBtn').addEventListener('click', close);
+    $('quizRetryBtn').addEventListener('click', start);
+    $('quizFinishBtn').addEventListener('click', showResult);
+    document.addEventListener('keydown', (e) => { if (isOpen && e.key === 'Escape') close(); });
+})();
+</script>
 </body>
 </html>
