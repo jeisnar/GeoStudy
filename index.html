@@ -53,9 +53,9 @@
            provider: 'none' (bawaan, soal tersimpan di perangkat) | 'firestore' | 'firebase'
            Guru mengubah soal lewat Mode Guru di dalam game (Ctrl+Shift+G, atau ketuk logo judul 3x). */
         window.GEO_CLOUD = {
-            provider: 'none',
-            firestore: { projectId: '', apiKey: '', collection: 'game_data', docId: 'bank_soal' },
-            firebase: { databaseURL: '', path: 'geoladder/questionBank' }
+            provider: 'firebase',
+            firestore: { projectId: 'geostudy-a6e3a', apiKey: 'AIzaSyDt0C1q0kKi_6w3dpTm-BQtFwsdT5UBVgs'', collection: 'game_data', docId: 'bank_soal' },
+            firebase: { databaseURL: 'geostudy-a6e3a.firebaseapp.com', path: 'geoladder/questionBank' }
         };
     </script>
     <!-- Google Fonts -->
@@ -373,7 +373,7 @@
                                     <div class="w-10 h-10 shrink-0 rounded-xl bg-rose-600 text-white flex items-center justify-center font-bold text-lg shadow-md">4</div>
                                     <div class="min-w-0"><h3 class="font-bold text-slate-900 text-lg leading-snug">Deret Geometri Tak Hingga</h3><p class="text-xs text-rose-700 font-medium">Bab 4 · Konvergen & Divergen</p></div>
                                 </div>
-                                <a href="https://youtu.be/wD2JbRDRWWg?si=77842QcNiNSIpPdP" target="_blank" rel="noopener" title="Tonton video materi ini di YouTube" aria-label="Tonton video materi Deret Geometri Tak Hingga di YouTube" class="shrink-0 w-11 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-md transition"><i class="fa-brands fa-youtube text-2xl"></i></a>
+                                <a href=https://youtu.be/wD2JbRDRWWg?si=77842QcNiNSIpPdPP" target="_blank" rel="noopener" title="Tonton video materi ini di YouTube" aria-label="Tonton video materi Deret Geometri Tak Hingga di YouTube" class="shrink-0 w-11 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-md transition"><i class="fa-brands fa-youtube text-2xl"></i></a>
                             </div>
                             <div class="h-[26rem] sm:h-[34rem] overflow-y-auto custom-scrollbar pr-3 space-y-3 text-sm text-slate-700 leading-relaxed"><p>Jika suku-suku deret terus ditambahkan tanpa henti, jumlahnya hanya bisa mendekati bilangan tertentu apabila suku-sukunya makin kecil, yaitu saat <strong>$-1 < r < 1$</strong>. Deret seperti ini disebut <strong>konvergen</strong>.</p><div class="p-3 bg-white rounded-xl border border-rose-100 text-center overflow-x-auto">$$S_\infty = \frac{a}{1 - r}\qquad (|r| < 1)$$</div><p>Jika $|r| \ge 1$, jumlah suku terus membesar (atau tidak menuju satu nilai), sehingga deret <strong>divergen</strong> dan tidak mempunyai jumlah tak hingga.</p><div class="p-3 bg-rose-50/70 rounded-xl border border-rose-100"><p class="font-bold text-rose-900 text-xs uppercase tracking-wider mb-1">Contoh 1</p><p>Hitung $8 + 4 + 2 + 1 + \dots$</p><p>$a = 8$, $r = \frac{1}{2}$, sehingga $S_\infty = \frac{8}{1 - \frac{1}{2}} = 16$.</p></div><div class="p-3 bg-rose-50/70 rounded-xl border border-rose-100"><p class="font-bold text-rose-900 text-xs uppercase tracking-wider mb-1">Contoh 2 (bola pantul)</p><p>Bola dijatuhkan dari ketinggian 10 m dan memantul setinggi $\frac{3}{4}$ tinggi sebelumnya. Panjang seluruh lintasan?</p><p>Lintasan turun pertama 10 m. Lintasan naik: $7{,}5 + 5{,}625 + \dots$ dengan $a = 7{,}5$ dan $r = \frac{3}{4}$, jumlahnya $\frac{7{,}5}{1 - \frac{3}{4}} = 30$ m. Setiap pantulan juga turun dengan jarak sama, sehingga total $= 10 + 2 \cdot 30 = 70$ m.</p></div><div class="p-3 bg-rose-50/70 rounded-xl border border-rose-100"><p class="font-bold text-rose-900 text-xs uppercase tracking-wider mb-1">Contoh 3</p><p>Deret $3 + 6 + 12 + \dots$ memiliki $r = 2$, sehingga $|r| \ge 1$ dan deret <strong>divergen</strong>.</p></div></div>
                         </div>
