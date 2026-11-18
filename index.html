@@ -53,9 +53,9 @@
            provider: 'none' (bawaan, soal tersimpan di perangkat) | 'firestore' | 'firebase'
            Guru mengubah soal lewat Mode Guru di dalam game (Ctrl+Shift+G, atau ketuk logo judul 3x). */
         window.GEO_CLOUD = {
-            provider: 'firebase',
+            provider: 'firestore',
             firestore: { projectId: 'geostudy-a6e3a', apiKey: 'AIzaSyDt0C1q0kKi_6w3dpTm-BQtFwsdT5UBVgs', collection: 'game_data', docId: 'bank_soal' },
-            firebase: { databaseURL: 'geostudy-a6e3a.firebaseapp.com', path: 'geoladder/questionBank' }
+            firebase: { databaseURL: 'https://geostudy-a6e3a-8b7de.firebaseapp.com/', path: 'geoladder/questionBank' }
         };
     </script>
     <!-- Google Fonts -->
