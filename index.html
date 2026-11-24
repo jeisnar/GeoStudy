@@ -47,6 +47,19 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, window.MATH_OPTS);"></script>
+    <!-- Lenis (lenis.dev): scroll halus | Motion (motion.dev): animasi kartu & teks per kata -->
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+    <script defer src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/motion@12/dist/motion.js"></script>
+    <script>
+        /* Sembunyikan judul sampai dipecah per kata; batas 3 dtk agar teks tetap muncul bila CDN lambat/gagal. */
+        (function () {
+            var d = document.documentElement;
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            d.classList.add('js-motion');
+            setTimeout(function () { d.classList.remove('js-motion'); }, 3000);
+        })();
+    </script>
     <script>
         /* ============ KONFIGURASI CLOUD BANK SOAL (isi di sini, cukup sekali) ============
            Dipakai oleh game Geo Leader dan Kuis Kartu di bagian Asesmen.
@@ -91,6 +104,9 @@
         }
 
         /* Smooth infinite carousel container */
+        .js-motion [data-split]:not(.is-split) { visibility: hidden; }
+        .gw { display: inline-block; }
+
         .carousel-track {
             display: flex;
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -176,10 +192,10 @@
             <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-200 border border-indigo-400/30 mb-4 backdrop-blur-sm">
                 <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Konsep Visual & Simulasi Real-Time
             </span>
-            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight max-w-4xl mx-auto leading-tight">
+            <h1 data-split="hero" class="text-3xl sm:text-5xl font-extrabold tracking-tight max-w-4xl mx-auto leading-tight">
                 Kuasai <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 via-violet-300 to-pink-300">Barisan & Deret Geometri</span> Secara Intuitive & Interaktif
             </h1>
-            <p class="mt-4 text-slate-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+            <p data-split="hero" class="mt-4 text-slate-300 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
                 Pahami pola perbesaran, perkalian rasio, deret tak hingga, hingga simulasi kalkulasi visual dalam satu platform pembelajaran modern.
             </p>
         </div>
@@ -195,7 +211,7 @@
                     <div class="flex items-center gap-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1">
                         <i class="fa-solid fa-layer-group"></i> Analisis & Latar Belakang
                     </div>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Mengapa Perlu Media Interaktif ini?</h2>
+                    <h2 data-split class="text-2xl sm:text-3xl font-extrabold text-slate-900">Mengapa Perlu Media Interaktif ini?</h2>
                 </div>
                 <p class="text-sm text-slate-500 mt-2 md:mt-0 max-w-md">
                     Geser kotak di bawah untuk membaca latar belakang, temuan miskonsepsi ahli, dan solusi pembelajaran yang ditawarkan.
@@ -331,7 +347,7 @@
         <section id="section-pembelajaran" class="scroll-mt-20">
             <div class="mb-6">
                 <div class="flex items-center gap-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1"><i class="fa-solid fa-book-open"></i> Materi Pembelajaran</div>
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Belajar Barisan & Deret Geometri</h2>
+                <h2 data-split class="text-2xl sm:text-3xl font-extrabold text-slate-900">Belajar Barisan & Deret Geometri</h2>
                 <p class="text-sm text-slate-500 mt-2 max-w-2xl">Geser kotak untuk membaca materi dari konsep dasar sampai deret tak hingga. Tekan ikon <i class="fa-brands fa-youtube text-red-600"></i> di pojok kanan atas kotak untuk menonton video materinya.</p>
             </div>
             <div class="relative max-w-4xl mx-auto" data-cr>
@@ -389,7 +405,7 @@
         <section id="section-materi" class="scroll-mt-20">
             <div class="text-center max-w-3xl mx-auto mb-10">
                 <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">Rangkuman Landasan Teori</span>
-                <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Materi Barisan dan Deret Geometri</h2>
+                <h2 data-split class="text-3xl font-extrabold text-slate-900 mt-2">Materi Barisan dan Deret Geometri</h2>
                 <p class="text-slate-600 text-sm mt-2">Pelajari rumus dasar, pola pembentukan suku, serta konsep deret hingga dan tak hingga dengan tepat.</p>
             </div>
 
@@ -500,7 +516,7 @@
         <section id="section-kalkulator" class="scroll-mt-20">
             <div class="text-center max-w-3xl mx-auto mb-10">
                 <span class="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">Laboratorium Eksplorasi</span>
-                <h2 class="text-3xl font-extrabold text-slate-900 mt-2">Kalkulator Interaktif & Visualisator</h2>
+                <h2 data-split class="text-3xl font-extrabold text-slate-900 mt-2">Kalkulator Interaktif & Visualisator</h2>
                 <p class="text-slate-600 text-sm mt-2">Ubah nilai variabel di bawah ini untuk melihat perhitungan otomatis, urutan suku, dan grafik visual secara langsung.</p>
                 <p id="mfHint" class="inline-flex items-center gap-2 text-xs text-indigo-700 bg-indigo-50 border border-indigo-100 rounded-full px-3 py-1.5 mt-3">
                     <i class="fa-solid fa-lightbulb text-amber-500"></i>
@@ -739,7 +755,7 @@
         <section id="section-asesmen" class="scroll-mt-20" aria-labelledby="asTitle">
             <div class="text-center max-w-2xl mx-auto mb-8">
                 <span class="text-xs font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-3 py-1 rounded-full border border-rose-100">Asesmen</span>
-                <h2 id="asTitle" class="text-3xl font-extrabold text-slate-900 mt-2">Uji Pemahamanmu</h2>
+                <h2 data-split id="asTitle" class="text-3xl font-extrabold text-slate-900 mt-2">Uji Pemahamanmu</h2>
                 <p class="text-slate-600 text-sm mt-2">Pilih salah satu: kerjakan kuis kartu, atau buktikan logikamu lewat game ular tangga Geo Leader.</p>
             </div>
             <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -827,13 +843,32 @@
         /* ============================================================
            1. CAROUSEL LOGIC (SECTION 1) - INFINITE LOOP
            ============================================================ */
+        /* Geser kartu dengan spring Motion; isi kartu tiba satu per satu. Tanpa Motion: transisi CSS biasa. */
+        function geoSlide(track, index) {
+            const st = track._geo || (track._geo = { x: 0, ctl: null, ready: false });
+            const to = -index * 100;
+            const M = window.Motion;
+            const set = (v) => { st.x = v; track.style.transform = `translateX(${v}%)`; };
+            if (st.ctl) st.ctl.stop();
+            if (!st.ready || !M || !M.animate || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                track.style.transition = st.ready ? 'transform .4s cubic-bezier(.25,1,.5,1)' : 'none';
+                st.ready = true;
+                set(to);
+                return;
+            }
+            track.style.transition = 'none';
+            st.ctl = M.animate(st.x, to, { type: 'spring', duration: 0.8, bounce: 0.22, onUpdate: set });
+            const slide = track.children[index];
+            if (slide && M.stagger) M.animate(Array.from(slide.children), { opacity: [0, 1], y: [18, 0] }, { duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: M.stagger(0.08, { startDelay: 0.1 }) });
+        }
+
         let currentSlide = 0;
         const totalSlides = 3;
         const track = document.getElementById('carouselTrack');
         const dots = document.querySelectorAll('.dot');
 
         function updateCarousel() {
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            geoSlide(track, currentSlide);
             
             // Update active dots
             dots.forEach((dot, idx) => {
@@ -8065,7 +8100,7 @@ function initCr(root) {
     st.go = (k) => {
         const n = track.children.length || 1;
         st.i = (k + n) % n;
-        track.style.transform = 'translateX(-' + (st.i * 100) + '%)';
+        geoSlide(track, st.i);
         dots().forEach((d, j) => {
             d.classList.toggle('bg-indigo-600', j === st.i); d.classList.toggle('w-6', j === st.i);
             d.classList.toggle('bg-slate-300', j !== st.i); d.classList.toggle('w-3', j !== st.i);
@@ -8246,6 +8281,69 @@ function geoLoadCloudQuiz() {
     $('quizFinishBtn').addEventListener('click', showResult);
     document.addEventListener('keydown', (e) => { if (isOpen && e.key === 'Escape') close(); });
 })();
+</script>
+<script>
+/* Lenis: scroll halus + tombol menu; Motion: judul tampil per kata. Semuanya opsional (CDN gagal -> halaman tetap normal). */
+document.addEventListener('DOMContentLoaded', function () {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const M = window.Motion;
+    const root = document.documentElement;
+
+    if (window.Lenis && !reduce) {
+        const lenis = new Lenis({ autoRaf: true });
+        root.classList.remove('scroll-smooth'); // bentrok dengan Lenis
+        document.querySelectorAll('.custom-scrollbar, .overflow-y-auto').forEach((el) => el.setAttribute('data-lenis-prevent', ''));
+
+        // Menu atas: geser mulus ke bagian tujuan (offset 80px = tinggi header + scroll-mt-20)
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest && e.target.closest('a[href^="#"]');
+            const id = a && a.getAttribute('href').slice(1);
+            const el = id && document.getElementById(decodeURIComponent(id));
+            if (!el) return;
+            e.preventDefault();
+            lenis.scrollTo(el.getBoundingClientRect().top + lenis.scroll - 80, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) });
+            history.replaceState(null, '', '#' + id);
+        });
+
+        // Arena game/kuis penuh layar memakai kelas overflow-hidden: jeda Lenis selama terbuka
+        new MutationObserver(() => lenis[root.classList.contains('overflow-hidden') ? 'stop' : 'start']())
+            .observe(root, { attributes: true, attributeFilter: ['class'] });
+    }
+
+    // Teks per kata. Judul berisi rumus ($...$) dilewati agar KaTeX tidak terganggu.
+    const targets = Array.from(document.querySelectorAll('[data-split]'));
+    if (!M || !M.animate || reduce) { targets.forEach((el) => el.classList.add('is-split')); return; }
+    targets.forEach((el, k) => {
+        if (/\$|\\\(/.test(el.textContent)) { el.classList.add('is-split'); return; }
+        const words = [];
+        (function walk(node, grad) {
+            Array.from(node.childNodes).forEach((n) => {
+                if (n.nodeType === 1) { walk(n, grad || (n.classList.contains('bg-clip-text') ? n.className : '')); return; }
+                if (n.nodeType !== 3) return;
+                const frag = document.createDocumentFragment();
+                n.textContent.split(/(\s+)/).forEach((part) => {
+                    if (!part) return;
+                    if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(part)); return; }
+                    const w = document.createElement('span');
+                    w.className = 'gw' + (grad ? ' ' + grad : ''); // kata dalam teks gradien membawa kelas gradiennya
+                    w.style.opacity = '0';
+                    w.textContent = part;
+                    frag.appendChild(w);
+                    words.push(w);
+                });
+                n.replaceWith(frag);
+            });
+        })(el, '');
+        el.classList.add('is-split');
+        let done = false;
+        const play = () => {
+            if (done) return;
+            done = true;
+            M.animate(words, { opacity: [0, 1], y: [22, 0] }, { duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: M.stagger ? M.stagger(0.055, { startDelay: el.dataset.split === 'hero' ? 0.1 + k * 0.25 : 0 }) : 0 });
+        };
+        if (el.dataset.split === 'hero' || !M.inView) play(); else M.inView(el, play, { amount: 0.6 });
+    });
+});
 </script>
 </body>
 </html>
