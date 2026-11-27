@@ -62,9 +62,9 @@
     </script>
     <script>
         /* ============ KONFIGURASI CLOUD BANK SOAL (isi di sini, cukup sekali) ============
-           Dipakai oleh game Geo Leader dan Kuis Kartu di bagian Asesmen.
+           Dipakai oleh game Geo Ladder dan Kuis Kartu di bagian Asesmen.
            provider: 'none' (bawaan, soal tersimpan di perangkat) | 'firestore' | 'firebase'
-           Guru mengubah soal lewat Mode Guru di dalam game (Ctrl+Shift+G, atau ketuk logo judul 3x). */
+           */
         window.GEO_CLOUD = {
             provider: 'firestore',
             firestore: { projectId: 'geostudy-a6e3a', apiKey: 'AIzaSyDt0C1q0kKi_6w3dpTm-BQtFwsdT5UBVgs', collection: 'game_data', docId: 'bank_soal' },
@@ -153,7 +153,7 @@
         .mf[data-view="1"] .mf-view { display: flex; }
         .mf[data-bad="1"] > input { border-color: #fb7185; box-shadow: 0 0 0 2px rgba(251, 113, 133, .3); }
 
-        /* ===== Portal Geo Leader ===== */
+        /* ===== Portal Geo Ladder ===== */
         .geo-portal { isolation: isolate; }
         .geo-card {
             position: absolute; left: 50%; top: 50%;
@@ -255,7 +255,7 @@
                     <h2 data-split class="text-2xl sm:text-3xl font-extrabold text-slate-900">Mengapa Perlu Media Interaktif ini?</h2>
                 </div>
                 <p class="text-sm text-slate-500 mt-2 md:mt-0 max-w-md">
-                    Geser kartu ke samping (atau pilih tab / tekan panah) untuk membaca latar belakang, temuan miskonsepsi ahli, dan solusi yang ditawarkan. <span class="sm:hidden"> </span>
+                    Geser kartu ke samping (atau pilih tab / tekan panah) untuk membaca latar belakang, temuan miskonsepsi ahli, dan solusi yang ditawarkan. <span class="sm:hidden">Di HP, ketuk kartu untuk membukanya layar penuh.</span>
                 </p>
             </div>
 
@@ -379,7 +379,7 @@
             <div class="mb-6">
                 <div class="flex items-center gap-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1"><i class="fa-solid fa-book-open"></i> Materi Pembelajaran</div>
                 <h2 data-split class="text-2xl sm:text-3xl font-extrabold text-slate-900">Belajar Barisan & Deret Geometri</h2>
-                <p class="text-sm text-slate-500 mt-2 max-w-2xl">Geser kartu untuk membaca materi dari konsep dasar sampai deret tak hingga. Tekan ikon <i class="fa-brands fa-youtube text-red-600"></i> di pojok kanan atas kotak untuk menonton video materinya. <span class="sm:hidden"> </span></p>
+                <p class="text-sm text-slate-500 mt-2 max-w-2xl">Geser kartu untuk membaca materi dari konsep dasar sampai deret tak hingga. Tekan ikon <i class="fa-brands fa-youtube text-red-600"></i> di pojok kanan atas kotak untuk menonton video materinya. <span class="sm:hidden">Di HP, ketuk kartu untuk membukanya layar penuh.</span></p>
             </div>
             <div class="relative max-w-6xl mx-auto" data-snap-root>
                 <div role="tablist" aria-label="Pilih kartu" class="flex flex-wrap justify-center gap-2 mb-5"><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">1</span>Pengertian & Rasio</button><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">2</span>Suku ke-n</button><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">3</span>Deret & Sn</button><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">4</span>Tak Hingga</button></div>
@@ -793,12 +793,12 @@
         </section>
 
 
-        <!-- ================= SECTION 5: ASESMEN (KUIS KARTU & GEO LEADER) ================= -->
+        <!-- ================= SECTION 5: ASESMEN (KUIS KARTU & GEO LADDER) ================= -->
         <section id="section-asesmen" class="scroll-mt-20" aria-labelledby="asTitle">
             <div class="text-center max-w-2xl mx-auto mb-8">
                 <span class="text-xs font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-3 py-1 rounded-full border border-rose-100">Asesmen</span>
                 <h2 data-split id="asTitle" class="text-3xl font-extrabold text-slate-900 mt-2">Uji Pemahamanmu</h2>
-                <p class="text-slate-600 text-sm mt-2">Pilih salah satu: kerjakan kuis kartu, atau buktikan logikamu lewat game ular tangga Geo Leader.</p>
+                <p class="text-slate-600 text-sm mt-2">Pilih salah satu: kerjakan kuis kartu, atau buktikan logikamu lewat game ular tangga Geo Ladder.</p>
             </div>
             <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
                 <div class="relative overflow-hidden rounded-3xl text-white shadow-2xl ring-1 ring-white/10 bg-gradient-to-br from-rose-900 via-[#4a2147] to-indigo-950 p-7 sm:p-9 flex flex-col">
@@ -814,17 +814,17 @@
                 <div class="relative overflow-hidden rounded-3xl text-white shadow-2xl ring-1 ring-white/10 bg-gradient-to-br from-indigo-950 via-[#25245a] to-[#1f3d3b] p-7 sm:p-9 flex flex-col">
                     <div class="absolute inset-0 opacity-[0.12] bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:18px_18px] pointer-events-none" aria-hidden="true"></div>
                     <div class="relative z-10 flex flex-col flex-1 text-center md:text-left">
-                        <span class="inline-flex items-center gap-2 self-center md:self-start px-3 py-1.5 rounded-full text-xs font-bold bg-[#b9cdb0]/15 text-[#cfe0c6] border border-[#b9cdb0]/30"><i class="fa-solid fa-chess-board"></i> Geo Leader</span>
-                        <h3 class="mt-4 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">Geo Leader: Ular Tangga Geometri</h3>
+                        <span class="inline-flex items-center gap-2 self-center md:self-start px-3 py-1.5 rounded-full text-xs font-bold bg-[#b9cdb0]/15 text-[#cfe0c6] border border-[#b9cdb0]/30"><i class="fa-solid fa-chess-board"></i> Geo Ladder</span>
+                        <h3 class="mt-4 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">Geo Ladder: Ular Tangga Geometri</h3>
                         <p class="mt-3 text-sm text-slate-200/90 leading-relaxed">Bukan sekadar keberuntungan: maju di papan lewat strategi kartu dan jawaban soal barisan dan deret geometri.</p>
                         <ul class="mt-5 flex flex-wrap justify-center md:justify-start gap-2"><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-users text-[#b9cdb0] mr-1.5"></i>2&ndash;4 pemain</li><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-clone text-[#b9cdb0] mr-1.5"></i>Kartu 1&ndash;6, tanpa dadu</li><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-layer-group text-[#b9cdb0] mr-1.5"></i>Soal mudah &rarr; sulit</li></ul>
-                        <div class="mt-auto pt-8"><button id="geoStartBtn" type="button" aria-haspopup="dialog" class="geo-cta group inline-flex items-center gap-3 px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 text-white text-base font-extrabold shadow-lg transition"><span>Mulai Geo Leader</span><i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i></button><p class="mt-4 text-sm text-slate-300"></p></div>
+                        <div class="mt-auto pt-8"><button id="geoStartBtn" type="button" aria-haspopup="dialog" class="geo-cta group inline-flex items-center gap-3 px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 text-white text-base font-extrabold shadow-lg transition"><span>Mulai Geo Ladder</span><i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i></button></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Arena kuis (layar penuh, seperti arena Geo Leader) -->
+        <!-- Arena kuis (layar penuh, seperti arena Geo Ladder) -->
         <div id="quizArena" class="hidden fixed inset-0 z-[100] flex-col bg-slate-100" role="dialog" aria-modal="true" aria-label="Kuis Kartu">
             <div class="flex items-center justify-between gap-3 px-3 sm:px-5 h-14 shrink-0 bg-indigo-950 text-white border-b border-white/10">
                 <button id="quizBackBtn" type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white"><i class="fa-solid fa-arrow-left"></i> <span>Keluar</span></button>
@@ -863,7 +863,6 @@
 
 
         <!-- ================= SECTION 6: PROFIL PENGEMBANG ================= -->
-        <!-- GANTI teks berlatar kuning di bawah ini dengan data Anda -->
         <section id="section-profil" class="scroll-mt-20" aria-labelledby="profTitle">
             <div class="text-center max-w-2xl mx-auto mb-8">
                 <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">Profil Pengembang</span>
@@ -872,18 +871,18 @@
             <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden grid md:grid-cols-5">
                 <div class="md:col-span-2 bg-gradient-to-br from-indigo-900 to-indigo-950 text-white p-8 flex flex-col items-center justify-center text-center">
                     <div class="w-24 h-24 rounded-full bg-white/10 border-2 border-white/30 flex items-center justify-center"><i class="fa-solid fa-user-graduate text-4xl text-indigo-200"></i></div>
-                    <p class="mt-4 text-xl font-extrabold">Pengembang Media</p>
+                    <p class="mt-4 text-xl font-extrabold">Jeisen Arise</p>
                     <p class="text-sm text-indigo-200 mt-1">Media Pembelajaran Matematika Interaktif</p>
                 </div>
                 <div class="md:col-span-3 p-6 sm:p-8">
                     <dl class="grid grid-cols-[7.5rem_1fr] gap-x-4 gap-y-3 text-base">
-                        <dt class="font-semibold text-slate-500">Nama</dt><dd class="text-slate-900 font-medium"><span class="text-amber-800 bg-amber-100 px-1.5 rounded">Nama lengkap pengembang</span></dd>
-                        <dt class="font-semibold text-slate-500">Kelas / Prodi</dt><dd class="text-slate-900 font-medium"><span class="text-amber-800 bg-amber-100 px-1.5 rounded">Kelas &middot; Program studi</span></dd>
-                        <dt class="font-semibold text-slate-500">Mata Kuliah</dt><dd class="text-slate-900 font-medium"><span class="text-amber-800 bg-amber-100 px-1.5 rounded">Nama mata kuliah</span></dd>
-                        <dt class="font-semibold text-slate-500">Dosen Pengampu</dt><dd class="text-slate-900 font-medium"><span class="text-amber-800 bg-amber-100 px-1.5 rounded">Nama dosen pengampu</span></dd>
+                        <dt class="font-semibold text-slate-500">Nama</dt><dd class="text-slate-900 font-medium">Jeisen Arise</dd>
+                        <dt class="font-semibold text-slate-500">Kelas / Prodi</dt><dd class="text-slate-900 font-medium">III A2 &middot; Pendidikan Matematika</dd>
+                        <dt class="font-semibold text-slate-500">Mata Kuliah</dt><dd class="text-slate-900 font-medium">Media Pembelajaran Matematika Berbasis TIK</dd>
+                        <dt class="font-semibold text-slate-500">Dosen Pengampu</dt><dd class="text-slate-900 font-medium">Revi Lestari Pasaribu, M.Pd</dd>
                         <dt class="font-semibold text-slate-500">Peran</dt><dd class="text-slate-900 font-medium">Perancang dan pengembang media</dd>
                     </dl>
-                    <p class="mt-5 pt-5 border-t border-slate-100 text-slate-600 leading-relaxed">GeoStudy adalah media pembelajaran interaktif untuk topik barisan dan deret geometri. Isinya mencakup materi bergaya buku, kalkulator pecahan dengan grafik, kuis kartu, dan game ular tangga Geo Leader agar siswa memahami konsep, bukan sekadar menghafal rumus.</p>
+                    <p class="mt-5 pt-5 border-t border-slate-100 text-slate-600 leading-relaxed">GeoStudy adalah media pembelajaran interaktif untuk topik barisan dan deret geometri. Isinya mencakup materi bergaya buku, kalkulator pecahan dengan grafik, kuis kartu, dan game ular tangga Geo Ladder agar siswa memahami konsep, bukan sekadar menghafal rumus.</p>
                 </div>
             </div>
         </section>
@@ -1404,13 +1403,13 @@
         };
     </script>
 
-    <!-- ================= ARENA GEO LEADER (LAYAR PENUH) ================= -->
-    <div id="geoArena" class="hidden fixed inset-0 z-[100] flex-col bg-slate-900 opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true" aria-label="Arena Geo Leader">
+    <!-- ================= ARENA GEO LADDER (LAYAR PENUH) ================= -->
+    <div id="geoArena" class="hidden fixed inset-0 z-[100] flex-col bg-slate-900 opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true" aria-label="Arena Geo Ladder">
         <div class="flex items-center justify-between gap-3 px-3 sm:px-5 h-14 shrink-0 bg-indigo-950 text-white border-b border-white/10">
             <button id="geoBackBtn" type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b9cdb0]">
                 <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke GeoStudy</span>
             </button>
-            <span class="font-extrabold tracking-tight">Geo <span class="text-[#b9cdb0]">Leader</span></span>
+            <span class="font-extrabold tracking-tight">Geo <span class="text-[#b9cdb0]">Ladder</span></span>
             <span class="hidden sm:block w-40" aria-hidden="true"></span>
         </div>
         <div class="relative flex-1 min-h-0">
@@ -1420,18 +1419,18 @@
                     <span class="text-sm font-semibold">Menyiapkan arena&hellip;</span>
                 </div>
             </div>
-            <iframe id="geoFrame" title="Geo Leader - permainan ular tangga barisan dan deret geometri" class="absolute inset-0 w-full h-full border-0" allow="autoplay; fullscreen"></iframe>
+            <iframe id="geoFrame" title="Geo Ladder - permainan ular tangga barisan dan deret geometri" class="absolute inset-0 w-full h-full border-0" allow="autoplay; fullscreen"></iframe>
         </div>
     </div>
 
-    <!-- Kode game Geo Leader (HTML+CSS+JS mandiri). Dimuat ke arena saat tombol Mulai ditekan.
+    <!-- Kode game Geo Ladder (HTML+CSS+JS mandiri). Dimuat ke arena saat tombol Mulai ditekan.
          Pengaturan cloud bank soal ada di blok "KONFIGURASI CLOUD" (config.js) di dalam kode ini. -->
     <script type="text/plain" id="geoLeaderDoc"><!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Geo Leader — Ular Tangga Barisan &amp; Deret Geometri</title>
+  <title>Geo Ladder — Ular Tangga Barisan &amp; Deret Geometri</title>
   <meta name="description" content="Permainan papan edukatif ular tangga untuk belajar barisan dan deret geometri. Tanpa dadu, strategi kartu, 2–4 pemain lokal.">
   <meta name="theme-color" content="#f3efe6">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236e9bc8'/%3E%3Cpath d='M9 22l5-6 4 3 5-8' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
@@ -1444,7 +1443,7 @@
   <style>
 /* style.css */
 /* =========================================================
-   Geo Leader — gaya antarmuka (palet lembut, nyaman di mata)
+   Geo Ladder — gaya antarmuka (palet lembut, nyaman di mata)
    ========================================================= */
 
 :root {
@@ -3733,18 +3732,18 @@ sub, sup {
   <div id="boot-screen" class="boot" role="status" aria-live="polite">
     <div class="boot-card">
       <div class="spinner" aria-hidden="true"></div>
-      <strong>Geo Leader</strong>
+      <strong>Geo Ladder</strong>
       <span id="boot-msg">Mengunduh soal terbaru…</span>
     </div>
   </div>
   <div id="app">
     <header class="topbar">
-      <a class="brand" href="#" id="brand-link" aria-label="Geo Leader">
+      <a class="brand" href="#" id="brand-link" aria-label="Geo Ladder">
         <span class="brand-mark" aria-hidden="true">
           <svg viewBox="0 0 32 32" width="30" height="30"><rect width="32" height="32" rx="9" fill="#6e9bc8"/><path d="M9 22l5-6 4 3 5-8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
         <span class="brand-text">
-          <strong>Geo Leader</strong>
+          <strong>Geo Ladder</strong>
           <small>Ular Tangga Barisan &amp; Deret Geometri</small>
         </span>
       </a>
@@ -3871,7 +3870,7 @@ sub, sup {
     </main>
 
     <footer class="footer">
-      <span>Geo Leader · Belajar barisan &amp; deret geometri sambil bermain</span>
+      <span>Geo Ladder · Belajar barisan &amp; deret geometri sambil bermain</span>
     </footer>
   </div>
 
@@ -7505,7 +7504,6 @@ sub, sup {
         null,
         h('h3', null, 'Masuk Mode Guru'),
         h('p', { class: 'modal-text' }, 'Masukkan PIN untuk mengelola bank soal.'),
-        h('p', { class: 'modal-text pin-hint' }, GG.CONFIG.teacherPin === '1234' ?'),
         input,
         err,
         h(
@@ -7952,7 +7950,6 @@ sub, sup {
     );
   }
 
-  /* Akses rahasia: Ctrl+Shift+G, atau klik logo judul 3x berturut-turut. */
   function canOpen() {
     return !document.body.classList.contains('has-modal');
   }
@@ -8053,7 +8050,7 @@ sub, sup {
 
     <script>
         /* ============================================================
-           6. PORTAL & ARENA GEO LEADER (SECTION 4)
+           6. PORTAL & ARENA GEO LADDER (SECTION 4)
            ============================================================ */
         (function () {
             const arena = document.getElementById('geoArena');
@@ -8209,7 +8206,7 @@ function geoLoadCloudQuiz() {
     ];
     /* [persen minimal, ikon, warna, judul, pesan] */
     const MSG = [
-        [100, 'fa-trophy', 'text-amber-500', 'Sempurna!', 'Semua jawabanmu benar. Kamu sudah sangat memahami barisan dan deret geometri. Pertahankan, lalu tantang dirimu di Geo Leader!'],
+        [100, 'fa-trophy', 'text-amber-500', 'Sempurna!', 'Semua jawabanmu benar. Kamu sudah sangat memahami barisan dan deret geometri. Pertahankan, lalu tantang dirimu di Geo Ladder!'],
         [80, 'fa-star', 'text-emerald-500', 'Hebat!', 'Pemahamanmu sudah baik. Tinggal sedikit lagi: baca pembahasan soal yang masih salah supaya semakin mantap.'],
         [60, 'fa-thumbs-up', 'text-sky-500', 'Cukup Baik', 'Konsep dasarnya sudah kamu kuasai. Ulangi bagian rumus pada materi, lalu coba kuis lagi untuk hasil yang lebih tinggi.'],
         [40, 'fa-book-open', 'text-orange-500', 'Terus Berlatih', 'Kamu sudah mulai paham, tetapi masih perlu latihan. Baca ulang materi dan tonton videonya, lalu coba lagi.'],
