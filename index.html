@@ -116,6 +116,28 @@
             box-shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.3);
         }
 
+        /* ===== Keterbacaan: font lebih besar di HP dan laptop ===== */
+        html { font-size: 17px; }
+        @media (min-width: 1280px) { html { font-size: 18px; } }
+        body .text-xs { font-size: .875rem; line-height: 1.4rem; }
+        body .text-sm { font-size: 1rem; line-height: 1.65rem; }
+        body .text-\[11px\] { font-size: .8125rem; line-height: 1.3rem; }
+        body .text-\[10px\] { font-size: .75rem; line-height: 1.2rem; }
+        body .katex { font-size: 1.2em; }
+        body .katex-display > .katex { font-size: 1.3em; }
+
+        /* ===== Kartu terpisah yang bisa digeser (scroll-snap) ===== */
+        .snap-scroller { scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+        .snap-scroller::-webkit-scrollbar { display: none; }
+        .snap-scroller [data-card] { transition: opacity .3s ease, transform .3s ease; }
+        .snap-scroller [data-card]:not(.is-active) { opacity: .62; transform: scale(.97); }
+        .snap-scroller:focus-visible { outline: 3px solid #a5b4fc; outline-offset: 4px; border-radius: 1rem; }
+
+        /* ===== Navigasi header ===== */
+        .nav-link { padding: .5rem .8rem; border-radius: .7rem; transition: background .2s, color .2s; }
+        .nav-link:hover { color: #4f46e5; background: #eef2ff; }
+        .nav-link[aria-current="true"] { color: #4f46e5; background: #e0e7ff; }
+
         /* Cegah scroll "menular" dari kotak isi carousel ke halaman */
         .custom-scrollbar { overscroll-behavior: contain; }
 
@@ -153,6 +175,29 @@
         .geo-cta { box-shadow: 0 0 0 0 rgba(185,205,176,.55), 0 14px 30px -10px rgba(79,70,229,.7); animation: geoPulse 2.6s ease-out infinite; }
         @keyframes geoPulse { 70% { box-shadow: 0 0 0 16px rgba(185,205,176,0), 0 14px 30px -10px rgba(79,70,229,.7); } 100% { box-shadow: 0 0 0 0 rgba(185,205,176,0), 0 14px 30px -10px rgba(79,70,229,.7); } }
         @media (prefers-reduced-motion: reduce) { .geo-card, .geo-cta { animation: none; } }
+
+        /* Arena kuis anak langsung <main class="space-y-16">: margin dari space-y menggeser/memperpendek overlay fixed */
+        #quizArena { margin: 0; }
+
+        /* ===== Khusus HP (<640px). Aturan ini tidak berlaku di tablet/PC ===== */
+        @media (max-width: 639px) {
+            main { padding-top: 1.5rem; }
+            body [data-card] { padding: 1.1rem; }
+            body [data-card] > div:first-child:has(> span) { flex-wrap: wrap; gap: .5rem; }
+            body [data-card] .custom-scrollbar { height: min(28rem, 62svh); padding-right: .5rem; }
+            /* --- Latar Belakang & Materi Pembelajaran: kartu ringkas (ketuk untuk layar penuh) --- */
+            :is(#section-carousel, #section-pembelajaran) [data-card] { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+            :is(#section-carousel, #section-pembelajaran) [data-card] > div:first-child { padding-bottom: .75rem; margin-bottom: .75rem; }
+            :is(#section-carousel, #section-pembelajaran) [data-card] .custom-scrollbar { height: auto; overflow: hidden; padding-right: 0; overscroll-behavior: auto; }
+            :is(#section-carousel, #section-pembelajaran) [data-card] .custom-scrollbar > :first-child { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+            :is(#section-carousel, #section-pembelajaran) [data-card] .custom-scrollbar > :not(:first-child) { display: none; }
+            :is(#section-carousel, #section-pembelajaran) [data-card] .custom-scrollbar::after { content: "Ketuk untuk membaca selengkapnya  \203A"; display: block; margin-top: .7rem; font-size: .9rem; font-weight: 700; color: #4f46e5; }
+            [role="tablist"] { gap: .4rem; }
+            [role="tablist"] > button { padding: .4rem .75rem; font-size: .9rem; }
+            body .katex-display > .katex { font-size: 1.1em; }
+            #bgmBtn { width: 2.5rem; height: 2.5rem; right: .6rem; bottom: .6rem; opacity: .85; }
+            #quizArena .max-w-3xl { padding-left: 1rem; padding-right: 1rem; }
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-indigo-500 selection:text-white">
@@ -170,19 +215,15 @@
                         <span class="hidden sm:inline-block text-xs text-indigo-600 font-semibold bg-indigo-50 px-2 py-0.5 rounded-full ml-2 border border-indigo-100">Media Interaktif</span>
                     </div>
                 </div>
-                <nav class="hidden md:flex space-x-6 text-sm font-semibold text-slate-600">
-                    <a href="#section-carousel" class="hover:text-indigo-600 transition">Pendahuluan</a>
-                    <a href="#section-materi" class="hover:text-indigo-600 transition">Materi & Rumus</a>
-                    <a href="#section-kalkulator" class="hover:text-indigo-600 transition">Kalkulator Interaktif</a>
-                    <a href="#section-asesmen" class="hover:text-indigo-600 transition">Asesmen</a>
-                </nav>
-                <div class="flex items-center space-x-3">
-                    <a href="#section-kalkulator" class="px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition flex items-center gap-2">
-                        <i class="fa-solid fa-calculator"></i> Mulai Eksplorasi
-                    </a>
+                <nav class="hidden xl:flex items-center gap-1 text-base font-semibold text-slate-600" aria-label="Navigasi bagian"><a href="#section-carousel" class="nav-link">Latar Belakang</a><a href="#section-pembelajaran" class="nav-link">Materi</a><a href="#section-materi" class="nav-link">Rumus</a><a href="#section-kalkulator" class="nav-link">Kalkulator</a><a href="#section-asesmen" class="nav-link">Asesmen</a><a href="#section-profil" class="nav-link">Profil</a></nav>
+                <div class="flex items-center gap-2">
+                    <a href="#section-carousel" class="hidden sm:flex whitespace-nowrap px-4 py-2.5 text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition items-center gap-2"><i class="fa-solid fa-play"></i> Mulai Belajar</a>
+                    <button type="button" id="menuBtn" class="xl:hidden w-11 h-11 rounded-xl border border-slate-200 bg-white text-slate-700 flex items-center justify-center hover:bg-slate-50" aria-expanded="false" aria-controls="mobileMenu" aria-label="Buka menu"><i class="fa-solid fa-bars text-lg"></i></button>
                 </div>
             </div>
         </div>
+        <div id="mobileMenu" class="hidden xl:hidden border-t border-slate-200 bg-white"><div class="max-w-7xl mx-auto px-4 py-3 grid grid-cols-2 gap-2"><a href="#section-carousel" class="nav-link flex items-center gap-2 text-base font-semibold text-slate-700 bg-slate-50 border border-slate-200"><i class="fa-solid fa-layer-group text-indigo-500 w-5 text-center"></i>Latar Belakang</a><a href="#section-pembelajaran" class="nav-link flex items-center gap-2 text-base font-semibold text-slate-700 bg-slate-50 border border-slate-200"><i class="fa-solid fa-book-open text-indigo-500 w-5 text-center"></i>Materi</a><a href="#section-materi" class="nav-link flex items-center gap-2 text-base font-semibold text-slate-700 bg-slate-50 border border-slate-200"><i class="fa-solid fa-square-root-variable text-indigo-500 w-5 text-center"></i>Rumus</a><a href="#section-kalkulator" class="nav-link flex items-center gap-2 text-base font-semibold text-slate-700 bg-slate-50 border border-slate-200"><i class="fa-solid fa-calculator text-indigo-500 w-5 text-center"></i>Kalkulator</a><a href="#section-asesmen" class="nav-link flex items-center gap-2 text-base font-semibold text-slate-700 bg-slate-50 border border-slate-200"><i class="fa-solid fa-pen-to-square text-indigo-500 w-5 text-center"></i>Asesmen</a><a href="#section-profil" class="nav-link flex items-center gap-2 text-base font-semibold text-slate-700 bg-slate-50 border border-slate-200"><i class="fa-solid fa-user-graduate text-indigo-500 w-5 text-center"></i>Profil</a></div></div>
+        <div id="readBar" class="absolute left-0 bottom-0 h-[3px] w-0 bg-gradient-to-r from-indigo-500 to-violet-500"></div>
     </header>
 
     <!-- HERO HEADER -->
@@ -214,18 +255,21 @@
                     <h2 data-split class="text-2xl sm:text-3xl font-extrabold text-slate-900">Mengapa Perlu Media Interaktif ini?</h2>
                 </div>
                 <p class="text-sm text-slate-500 mt-2 md:mt-0 max-w-md">
-                    Geser kotak di bawah untuk membaca latar belakang, temuan miskonsepsi ahli, dan solusi pembelajaran yang ditawarkan.
+                    Geser kartu ke samping (atau pilih tab / tekan panah) untuk membaca latar belakang, temuan miskonsepsi ahli, dan solusi yang ditawarkan. <span class="sm:hidden"> </span>
                 </p>
             </div>
 
-            <!-- CAROUSEL CONTAINER -->
-            <div class="relative group max-w-4xl mx-auto">
-                <!-- Carousel viewport -->
-                <div class="overflow-hidden rounded-2xl shadow-xl bg-white border border-slate-200/80" style="touch-action: pan-y pinch-zoom;">
-                    <div id="carouselTrack" class="carousel-track">
+            <!-- KARTU GESER: tiga kartu terpisah -->
+            <div class="relative max-w-6xl mx-auto" data-snap-root>
+                <div role="tablist" aria-label="Pilih kartu" class="flex flex-wrap justify-center gap-2 mb-5"><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">1</span>Permasalahan Siswa</button><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">2</span>Pendapat Ahli</button><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">3</span>Solusi Interaktif</button></div>
+                <div class="relative">
+                    <button type="button" data-snap-prev class="hidden sm:flex absolute top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 items-center justify-center hover:bg-indigo-600 hover:text-white transition disabled:opacity-30 disabled:pointer-events-none left-0" aria-label="Kartu sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button type="button" data-snap-next class="hidden sm:flex absolute top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 items-center justify-center hover:bg-indigo-600 hover:text-white transition disabled:opacity-30 disabled:pointer-events-none right-0" aria-label="Kartu berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div data-snap tabindex="0" aria-label="Kartu geser. Gunakan panah kiri dan kanan." class="snap-scroller flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory px-[6%] sm:px-[11%] lg:px-[18%] pb-4 pt-1">
+
                         
                         <!-- CARD 1: Latar Belakang / Permasalahan Siswa -->
-                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-amber-50/50 via-white to-amber-50/30">
+                        <div data-card class="w-[88%] sm:w-[78%] lg:w-[64%] flex-shrink-0 snap-center rounded-2xl border border-amber-200/70 shadow-lg p-6 sm:p-8 bg-white bg-gradient-to-br from-amber-50/50 via-white to-amber-50/30">
                             <div class="flex items-center justify-between pb-4 border-b border-amber-200/60 mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-amber-200">
@@ -256,7 +300,7 @@
                         </div>
 
                         <!-- CARD 2: Pendapat Ahli & Penelitian Terkait -->
-                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-indigo-50/50 via-white to-indigo-50/30">
+                        <div data-card class="w-[88%] sm:w-[78%] lg:w-[64%] flex-shrink-0 snap-center rounded-2xl border border-indigo-200/70 shadow-lg p-6 sm:p-8 bg-white bg-gradient-to-br from-indigo-50/50 via-white to-indigo-50/30">
                             <div class="flex items-center justify-between pb-4 border-b border-indigo-200/60 mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-indigo-200">
@@ -293,7 +337,7 @@
                         </div>
 
                         <!-- CARD 3: Solusi Interaktif -->
-                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-emerald-50/50 via-white to-emerald-50/30">
+                        <div data-card class="w-[88%] sm:w-[78%] lg:w-[64%] flex-shrink-0 snap-center rounded-2xl border border-emerald-200/70 shadow-lg p-6 sm:p-8 bg-white bg-gradient-to-br from-emerald-50/50 via-white to-emerald-50/30">
                             <div class="flex items-center justify-between pb-4 border-b border-emerald-200/60 mb-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-md shadow-emerald-200">
@@ -322,23 +366,10 @@
                             </div>
                         </div>
 
+
                     </div>
                 </div>
-
-                <!-- Carousel Controls -->
-                <button id="prevBtn" onclick="moveCarousel(-1)" class="absolute top-1/2 -left-4 sm:-left-6 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition group-hover:scale-110 focus:outline-none">
-                    <i class="fa-solid fa-chevron-left"></i>
-                </button>
-                <button id="nextBtn" onclick="moveCarousel(1)" class="absolute top-1/2 -right-4 sm:-right-6 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition group-hover:scale-110 focus:outline-none">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-
-                <!-- Indicator Dots -->
-                <div class="flex justify-center items-center gap-2 mt-4">
-                    <button onclick="goToSlide(0)" class="dot w-3 h-3 rounded-full bg-indigo-600 transition-all"></button>
-                    <button onclick="goToSlide(1)" class="dot w-3 h-3 rounded-full bg-slate-300 transition-all"></button>
-                    <button onclick="goToSlide(2)" class="dot w-3 h-3 rounded-full bg-slate-300 transition-all"></button>
-                </div>
+                <p data-snap-count class="text-center text-sm font-semibold text-slate-500 mt-1" aria-live="polite"></p>
             </div>
         </section>
 
@@ -348,12 +379,16 @@
             <div class="mb-6">
                 <div class="flex items-center gap-2 text-indigo-600 font-bold text-xs uppercase tracking-wider mb-1"><i class="fa-solid fa-book-open"></i> Materi Pembelajaran</div>
                 <h2 data-split class="text-2xl sm:text-3xl font-extrabold text-slate-900">Belajar Barisan & Deret Geometri</h2>
-                <p class="text-sm text-slate-500 mt-2 max-w-2xl">Geser kotak untuk membaca materi dari konsep dasar sampai deret tak hingga. Tekan ikon <i class="fa-brands fa-youtube text-red-600"></i> di pojok kanan atas kotak untuk menonton video materinya.</p>
+                <p class="text-sm text-slate-500 mt-2 max-w-2xl">Geser kartu untuk membaca materi dari konsep dasar sampai deret tak hingga. Tekan ikon <i class="fa-brands fa-youtube text-red-600"></i> di pojok kanan atas kotak untuk menonton video materinya. <span class="sm:hidden"> </span></p>
             </div>
-            <div class="relative max-w-4xl mx-auto" data-cr>
-                <div class="overflow-hidden rounded-2xl shadow-xl bg-white border border-slate-200/80" style="touch-action: pan-y pinch-zoom;">
-                    <div class="carousel-track cr-track">
-                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-indigo-50/50 via-white to-indigo-50/30">
+            <div class="relative max-w-6xl mx-auto" data-snap-root>
+                <div role="tablist" aria-label="Pilih kartu" class="flex flex-wrap justify-center gap-2 mb-5"><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">1</span>Pengertian & Rasio</button><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">2</span>Suku ke-n</button><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">3</span>Deret & Sn</button><button type="button" role="tab" data-tab class="px-4 py-2 rounded-xl border text-sm font-semibold transition"><span class="font-bold mr-1.5">4</span>Tak Hingga</button></div>
+                <div class="relative">
+                    <button type="button" data-snap-prev class="hidden sm:flex absolute top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 items-center justify-center hover:bg-indigo-600 hover:text-white transition disabled:opacity-30 disabled:pointer-events-none left-0" aria-label="Kartu sebelumnya"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button type="button" data-snap-next class="hidden sm:flex absolute top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 items-center justify-center hover:bg-indigo-600 hover:text-white transition disabled:opacity-30 disabled:pointer-events-none right-0" aria-label="Kartu berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
+                    <div data-snap tabindex="0" aria-label="Kartu geser. Gunakan panah kiri dan kanan." class="snap-scroller flex gap-4 sm:gap-6 overflow-x-auto snap-x snap-mandatory px-[6%] sm:px-[11%] lg:px-[18%] pb-4 pt-1">
+
+                        <div data-card class="w-[88%] sm:w-[78%] lg:w-[64%] flex-shrink-0 snap-center rounded-2xl border border-indigo-200/70 shadow-lg p-6 sm:p-8 bg-white bg-gradient-to-br from-indigo-50/50 via-white to-indigo-50/30">
                             <div class="flex items-center justify-between gap-3 pb-4 border-b border-indigo-200/60 mb-4">
                                 <div class="flex items-center gap-3 min-w-0">
                                     <div class="w-10 h-10 shrink-0 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-lg shadow-md">1</div>
@@ -363,7 +398,7 @@
                             </div>
                             <div class="h-[26rem] sm:h-[34rem] overflow-y-auto custom-scrollbar pr-3 space-y-3 text-sm text-slate-700 leading-relaxed"><p><strong>Barisan geometri</strong> adalah barisan bilangan yang setiap sukunya diperoleh dengan <strong>mengalikan</strong> suku sebelumnya dengan bilangan tetap yang disebut <strong>rasio</strong> ($r$). Suku pertama dilambangkan $a$ atau $U_1$.</p><div class="p-3 bg-white rounded-xl border border-indigo-100 text-center overflow-x-auto">$$r = \frac{U_2}{U_1} = \frac{U_3}{U_2} = \dots = \frac{U_n}{U_{n-1}}$$</div><p>Bandingkan dengan barisan aritmetika yang memiliki <em>beda</em> tetap (penjumlahan). Pada barisan geometri yang tetap adalah <em>perbandingan</em> (perkalian).</p><div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-100"><p class="font-bold text-indigo-900 text-xs uppercase tracking-wider mb-1">Contoh 1</p><p>Barisan $2, 6, 18, 54, \dots$ memiliki $r = \frac{6}{2} = \frac{18}{6} = 3$, sehingga merupakan barisan geometri naik.</p></div><div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-100"><p class="font-bold text-indigo-900 text-xs uppercase tracking-wider mb-1">Contoh 2</p><p>Barisan $16, 8, 4, 2, \dots$ memiliki $r = \frac{8}{16} = \frac{1}{2}$. Karena $0 < r < 1$, suku-sukunya semakin mengecil.</p></div><div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-100"><p class="font-bold text-indigo-900 text-xs uppercase tracking-wider mb-1">Contoh 3</p><p>Barisan $3, -6, 12, -24, \dots$ memiliki $r = \frac{-6}{3} = -2$. Karena $r < 0$, tanda suku berganti-ganti (positif, negatif, positif, ...).</p></div><p class="font-semibold text-slate-800">Rangkuman:</p><ul class="list-disc pl-5 space-y-1"><li>$r > 1$: barisan naik</li><li>$0 < r < 1$: barisan turun mendekati nol</li><li>$r < 0$: suku berselang-seling tanda</li><li>$r = 1$: semua suku sama (konstan)</li></ul></div>
                         </div>
-                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-violet-50/50 via-white to-violet-50/30">
+                        <div data-card class="w-[88%] sm:w-[78%] lg:w-[64%] flex-shrink-0 snap-center rounded-2xl border border-violet-200/70 shadow-lg p-6 sm:p-8 bg-white bg-gradient-to-br from-violet-50/50 via-white to-violet-50/30">
                             <div class="flex items-center justify-between gap-3 pb-4 border-b border-violet-200/60 mb-4">
                                 <div class="flex items-center gap-3 min-w-0">
                                     <div class="w-10 h-10 shrink-0 rounded-xl bg-violet-600 text-white flex items-center justify-center font-bold text-lg shadow-md">2</div>
@@ -373,7 +408,7 @@
                             </div>
                             <div class="h-[26rem] sm:h-[34rem] overflow-y-auto custom-scrollbar pr-3 space-y-3 text-sm text-slate-700 leading-relaxed"><p>Perhatikan pola pembentukan suku: $U_1 = a$, $U_2 = a \cdot r$, $U_3 = a \cdot r^2$, $U_4 = a \cdot r^3$. Pangkat dari $r$ selalu <strong>satu lebih kecil</strong> dari nomor suku, sehingga:</p><div class="p-3 bg-white rounded-xl border border-violet-100 text-center overflow-x-auto">$$U_n = a \cdot r^{\,n-1}$$</div><p>Keterangan: $a$ = suku pertama, $r$ = rasio, $n$ = nomor suku. Hati-hati: yang dipangkatkan hanya $r$, bukan $(a \cdot r)$.</p><div class="p-3 bg-violet-50/70 rounded-xl border border-violet-100"><p class="font-bold text-violet-900 text-xs uppercase tracking-wider mb-1">Contoh 1</p><p>Tentukan suku ke-8 dari $3, 6, 12, \dots$</p><p>$a = 3$, $r = 2$, maka $U_8 = 3 \cdot 2^{7} = 3 \cdot 128 = 384$.</p></div><div class="p-3 bg-violet-50/70 rounded-xl border border-violet-100"><p class="font-bold text-violet-900 text-xs uppercase tracking-wider mb-1">Contoh 2</p><p>Diketahui $U_2 = 6$ dan $U_5 = 48$. Tentukan $a$ dan $r$.</p><p>$\frac{U_5}{U_2} = \frac{a r^4}{a r} = r^3 = \frac{48}{6} = 8$, sehingga $r = 2$. Lalu $a = \frac{U_2}{r} = \frac{6}{2} = 3$.</p></div><p class="font-semibold text-slate-800">Tips:</p><ul class="list-disc pl-5 space-y-1"><li>Untuk mencari $r$ dari dua suku, bagi suku yang lebih besar nomornya dengan yang lebih kecil.</li><li>Selisih nomor suku menjadi pangkat dari $r$.</li></ul></div>
                         </div>
-                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-emerald-50/50 via-white to-emerald-50/30">
+                        <div data-card class="w-[88%] sm:w-[78%] lg:w-[64%] flex-shrink-0 snap-center rounded-2xl border border-emerald-200/70 shadow-lg p-6 sm:p-8 bg-white bg-gradient-to-br from-emerald-50/50 via-white to-emerald-50/30">
                             <div class="flex items-center justify-between gap-3 pb-4 border-b border-emerald-200/60 mb-4">
                                 <div class="flex items-center gap-3 min-w-0">
                                     <div class="w-10 h-10 shrink-0 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow-md">3</div>
@@ -383,20 +418,19 @@
                             </div>
                             <div class="h-[26rem] sm:h-[34rem] overflow-y-auto custom-scrollbar pr-3 space-y-3 text-sm text-slate-700 leading-relaxed"><p><strong>Deret geometri</strong> adalah penjumlahan suku-suku barisan geometri: $S_n = U_1 + U_2 + \dots + U_n$. Jumlah $n$ suku pertama dihitung dengan:</p><div class="p-3 bg-white rounded-xl border border-emerald-100 text-center overflow-x-auto">$$S_n = \frac{a\,(r^n - 1)}{r - 1}\quad (r > 1) \qquad S_n = \frac{a\,(1 - r^n)}{1 - r}\quad (r < 1)$$</div><p>Jika $r = 1$ maka semua suku sama, sehingga $S_n = n \cdot a$. Kedua rumus di atas sebenarnya sama, hanya dipilih agar penyebut bernilai positif.</p><div class="p-3 bg-emerald-50/70 rounded-xl border border-emerald-100"><p class="font-bold text-emerald-900 text-xs uppercase tracking-wider mb-1">Contoh 1</p><p>Hitung $2 + 6 + 18 + 54 + 162$.</p><p>$a = 2$, $r = 3$, $n = 5$: $S_5 = \frac{2(3^5 - 1)}{3 - 1} = \frac{2 \cdot 242}{2} = 242$.</p></div><div class="p-3 bg-emerald-50/70 rounded-xl border border-emerald-100"><p class="font-bold text-emerald-900 text-xs uppercase tracking-wider mb-1">Contoh 2</p><p>Hitung $64 + 32 + 16 + 8$.</p><p>$a = 64$, $r = \frac{1}{2}$, $n = 4$: $S_4 = \frac{64\left(1 - \left(\frac{1}{2}\right)^4\right)}{1 - \frac{1}{2}} = \frac{64 \cdot \frac{15}{16}}{\frac{1}{2}} = 120$.</p></div><p>Hubungan penting: $U_n = S_n - S_{n-1}$.</p></div>
                         </div>
-                        <div class="w-full flex-shrink-0 p-6 sm:p-8 bg-gradient-to-br from-rose-50/50 via-white to-rose-50/30">
+                        <div data-card class="w-[88%] sm:w-[78%] lg:w-[64%] flex-shrink-0 snap-center rounded-2xl border border-rose-200/70 shadow-lg p-6 sm:p-8 bg-white bg-gradient-to-br from-rose-50/50 via-white to-rose-50/30">
                             <div class="flex items-center justify-between gap-3 pb-4 border-b border-rose-200/60 mb-4">
                                 <div class="flex items-center gap-3 min-w-0">
                                     <div class="w-10 h-10 shrink-0 rounded-xl bg-rose-600 text-white flex items-center justify-center font-bold text-lg shadow-md">4</div>
                                     <div class="min-w-0"><h3 class="font-bold text-slate-900 text-lg leading-snug">Deret Geometri Tak Hingga</h3><p class="text-xs text-rose-700 font-medium">Bab 4 · Konvergen & Divergen</p></div>
                                 </div>
-                                <a href=" https://youtu.be/wD2JbRDRWWg?si=77842QcNiNSIpPdPP" target="_blank" rel="noopener" title="Tonton video materi ini di YouTube" aria-label="Tonton video materi Deret Geometri Tak Hingga di YouTube" class="shrink-0 w-11 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-md transition"><i class="fa-brands fa-youtube text-2xl"></i></a>
+                                <a href="https://youtu.be/wD2JbRDRWWg?si=77842QcNiNSIpPdPP" target="_blank" rel="noopener" title="Tonton video materi ini di YouTube" aria-label="Tonton video materi Deret Geometri Tak Hingga di YouTube" class="shrink-0 w-11 h-11 rounded-xl bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-md transition"><i class="fa-brands fa-youtube text-2xl"></i></a>
                             </div>
                             <div class="h-[26rem] sm:h-[34rem] overflow-y-auto custom-scrollbar pr-3 space-y-3 text-sm text-slate-700 leading-relaxed"><p>Jika suku-suku deret terus ditambahkan tanpa henti, jumlahnya hanya bisa mendekati bilangan tertentu apabila suku-sukunya makin kecil, yaitu saat <strong>$-1 < r < 1$</strong>. Deret seperti ini disebut <strong>konvergen</strong>.</p><div class="p-3 bg-white rounded-xl border border-rose-100 text-center overflow-x-auto">$$S_\infty = \frac{a}{1 - r}\qquad (|r| < 1)$$</div><p>Jika $|r| \ge 1$, jumlah suku terus membesar (atau tidak menuju satu nilai), sehingga deret <strong>divergen</strong> dan tidak mempunyai jumlah tak hingga.</p><div class="p-3 bg-rose-50/70 rounded-xl border border-rose-100"><p class="font-bold text-rose-900 text-xs uppercase tracking-wider mb-1">Contoh 1</p><p>Hitung $8 + 4 + 2 + 1 + \dots$</p><p>$a = 8$, $r = \frac{1}{2}$, sehingga $S_\infty = \frac{8}{1 - \frac{1}{2}} = 16$.</p></div><div class="p-3 bg-rose-50/70 rounded-xl border border-rose-100"><p class="font-bold text-rose-900 text-xs uppercase tracking-wider mb-1">Contoh 2 (bola pantul)</p><p>Bola dijatuhkan dari ketinggian 10 m dan memantul setinggi $\frac{3}{4}$ tinggi sebelumnya. Panjang seluruh lintasan?</p><p>Lintasan turun pertama 10 m. Lintasan naik: $7{,}5 + 5{,}625 + \dots$ dengan $a = 7{,}5$ dan $r = \frac{3}{4}$, jumlahnya $\frac{7{,}5}{1 - \frac{3}{4}} = 30$ m. Setiap pantulan juga turun dengan jarak sama, sehingga total $= 10 + 2 \cdot 30 = 70$ m.</p></div><div class="p-3 bg-rose-50/70 rounded-xl border border-rose-100"><p class="font-bold text-rose-900 text-xs uppercase tracking-wider mb-1">Contoh 3</p><p>Deret $3 + 6 + 12 + \dots$ memiliki $r = 2$, sehingga $|r| \ge 1$ dan deret <strong>divergen</strong>.</p></div></div>
                         </div>
                     </div>
                 </div>
-                <button type="button" data-prev class="absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition focus:outline-none z-10 -left-4 sm:-left-6" aria-label="Sebelumnya"><i class="fa-solid fa-chevron-left"></i></button><button type="button" data-next class="absolute top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-slate-700 shadow-lg border border-slate-200 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition focus:outline-none z-10 -right-4 sm:-right-6" aria-label="Berikutnya"><i class="fa-solid fa-chevron-right"></i></button>
-                <div class="flex justify-center items-center gap-2 mt-4"><button type="button" class="cr-dot h-3 rounded-full bg-slate-300 w-3 transition-all" aria-label="Kartu 1"></button><button type="button" class="cr-dot h-3 rounded-full bg-slate-300 w-3 transition-all" aria-label="Kartu 2"></button><button type="button" class="cr-dot h-3 rounded-full bg-slate-300 w-3 transition-all" aria-label="Kartu 3"></button><button type="button" class="cr-dot h-3 rounded-full bg-slate-300 w-3 transition-all" aria-label="Kartu 4"></button></div>
+                <p data-snap-count class="text-center text-sm font-semibold text-slate-500 mt-1" aria-live="polite"></p>
             </div>
         </section>
 
@@ -524,10 +558,12 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="space-y-8">
+            <!-- BARIS 1: Kalkulator 1 + Grafik (grafik berhenti saat sejajar dasar Kalkulator 1) -->
+            <div class="grid grid-cols-1 lg:grid-cols-6 gap-8">
 
                 <!-- KOTAK KALKULATOR 1: Menghitung Un dan Sn -->
-                <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-lg flex flex-col justify-between">
+                <div class="lg:col-span-2 bg-white rounded-2xl p-6 border border-slate-200 shadow-lg flex flex-col justify-between">
                     <div>
                         <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
                             <div>
@@ -599,6 +635,27 @@
                     </div>
                 </div>
 
+
+            <!-- Interactive Graph Canvas -->
+            <div class="lg:col-span-4 lg:sticky lg:top-24 lg:self-start bg-white rounded-2xl p-6 border border-slate-200 shadow-lg">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900">Grafik Visualisasi Pertumbuhan / Peluruhan Suku</h3>
+                        <p class="text-xs text-slate-500">Visual visualisasi grafik berdasarkan parameter Kalkulator 1 ($a$, $r$, $n$)</p>
+                    </div>
+                    <span class="text-xs font-mono bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 rounded-full font-semibold">
+                        Live Render Canvas
+                    </span>
+                </div>
+                <div class="w-full h-64 sm:h-72 lg:h-80 bg-slate-900 rounded-xl p-2 relative overflow-hidden">
+                    <canvas id="sequenceChart" class="w-full h-full block"></canvas>
+                </div>
+            </div>
+
+            </div>
+
+            <!-- BARIS 2: Kalkulator 2 dan 3 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
                 <!-- KOTAK KALKULATOR 2: Menghitung Rasio (r) -->
                 <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-lg flex flex-col justify-between">
@@ -732,21 +789,6 @@
                 </div>
 
             </div>
-
-            <!-- Interactive Graph Canvas -->
-            <div class="mt-10 bg-white rounded-2xl p-6 border border-slate-200 shadow-md">
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-900">Grafik Visualisasi Pertumbuhan / Peluruhan Suku</h3>
-                        <p class="text-xs text-slate-500">Visual visualisasi grafik berdasarkan parameter Kalkulator 1 ($a$, $r$, $n$)</p>
-                    </div>
-                    <span class="text-xs font-mono bg-indigo-50 text-indigo-700 border border-indigo-100 px-3 py-1 rounded-full font-semibold">
-                        Live Render Canvas
-                    </span>
-                </div>
-                <div class="w-full h-64 bg-slate-900 rounded-xl p-2 relative overflow-hidden">
-                    <canvas id="sequenceChart" class="w-full h-full block"></canvas>
-                </div>
             </div>
         </section>
 
@@ -776,7 +818,7 @@
                         <h3 class="mt-4 text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight">Geo Leader: Ular Tangga Geometri</h3>
                         <p class="mt-3 text-sm text-slate-200/90 leading-relaxed">Bukan sekadar keberuntungan: maju di papan lewat strategi kartu dan jawaban soal barisan dan deret geometri.</p>
                         <ul class="mt-5 flex flex-wrap justify-center md:justify-start gap-2"><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-users text-[#b9cdb0] mr-1.5"></i>2&ndash;4 pemain</li><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-clone text-[#b9cdb0] mr-1.5"></i>Kartu 1&ndash;6, tanpa dadu</li><li class="px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-semibold text-slate-100"><i class="fa-solid fa-layer-group text-[#b9cdb0] mr-1.5"></i>Soal mudah &rarr; sulit</li></ul>
-                        <div class="mt-auto pt-8"><button id="geoStartBtn" type="button" aria-haspopup="dialog" class="geo-cta group inline-flex items-center gap-3 px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 text-white text-base font-extrabold shadow-lg transition"><span>Mulai Geo Leader</span><i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i></button></div>
+                        <div class="mt-auto pt-8"><button id="geoStartBtn" type="button" aria-haspopup="dialog" class="geo-cta group inline-flex items-center gap-3 px-7 py-4 rounded-2xl bg-gradient-to-r from-indigo-500 to-violet-500 hover:from-indigo-400 hover:to-violet-400 text-white text-base font-extrabold shadow-lg transition"><span>Mulai Geo Leader</span><i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i></button><p class="mt-4 text-sm text-slate-300"></p></div>
                     </div>
                 </div>
             </div>
@@ -819,6 +861,33 @@
             </div>
         </div>
 
+
+        <!-- ================= SECTION 6: PROFIL PENGEMBANG ================= -->
+        <!-- GANTI teks berlatar kuning di bawah ini dengan data Anda -->
+        <section id="section-profil" class="scroll-mt-20" aria-labelledby="profTitle">
+            <div class="text-center max-w-2xl mx-auto mb-8">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100">Profil Pengembang</span>
+                <h2 id="profTitle" class="text-3xl font-extrabold text-slate-900 mt-2">Di Balik GeoStudy</h2>
+            </div>
+            <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 overflow-hidden grid md:grid-cols-5">
+                <div class="md:col-span-2 bg-gradient-to-br from-indigo-900 to-indigo-950 text-white p-8 flex flex-col items-center justify-center text-center">
+                    <div class="w-24 h-24 rounded-full bg-white/10 border-2 border-white/30 flex items-center justify-center"><i class="fa-solid fa-user-graduate text-4xl text-indigo-200"></i></div>
+                    <p class="mt-4 text-xl font-extrabold">Pengembang Media</p>
+                    <p class="text-sm text-indigo-200 mt-1">Media Pembelajaran Matematika Interaktif</p>
+                </div>
+                <div class="md:col-span-3 p-6 sm:p-8">
+                    <dl class="grid grid-cols-[7.5rem_1fr] gap-x-4 gap-y-3 text-base">
+                        <dt class="font-semibold text-slate-500">Nama</dt><dd class="text-slate-900 font-medium"><span class="text-amber-800 bg-amber-100 px-1.5 rounded">Nama lengkap pengembang</span></dd>
+                        <dt class="font-semibold text-slate-500">Kelas / Prodi</dt><dd class="text-slate-900 font-medium"><span class="text-amber-800 bg-amber-100 px-1.5 rounded">Kelas &middot; Program studi</span></dd>
+                        <dt class="font-semibold text-slate-500">Mata Kuliah</dt><dd class="text-slate-900 font-medium"><span class="text-amber-800 bg-amber-100 px-1.5 rounded">Nama mata kuliah</span></dd>
+                        <dt class="font-semibold text-slate-500">Dosen Pengampu</dt><dd class="text-slate-900 font-medium"><span class="text-amber-800 bg-amber-100 px-1.5 rounded">Nama dosen pengampu</span></dd>
+                        <dt class="font-semibold text-slate-500">Peran</dt><dd class="text-slate-900 font-medium">Perancang dan pengembang media</dd>
+                    </dl>
+                    <p class="mt-5 pt-5 border-t border-slate-100 text-slate-600 leading-relaxed">GeoStudy adalah media pembelajaran interaktif untuk topik barisan dan deret geometri. Isinya mencakup materi bergaya buku, kalkulator pecahan dengan grafik, kuis kartu, dan game ular tangga Geo Leader agar siswa memahami konsep, bukan sekadar menghafal rumus.</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- FOOTER -->
@@ -826,13 +895,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
             <div class="flex items-center justify-center space-x-2 text-white font-extrabold text-lg">
                 <i class="fa-solid fa-square-root-variable text-indigo-400"></i>
-                <span>GeoSeries<span class="text-indigo-400">Hub</span></span>
+                <span>Geo<span class="text-indigo-400">Study</span></span>
             </div>
             <p class="text-xs text-slate-500 max-w-md mx-auto">
                 Media Pembelajaran Matematika Interaktif Topik Barisan dan Deret Geometri. Dirancang untuk meningkatkan pemahaman konseptual dan efektivitas pembelajaran.
             </p>
             <p class="text-xs text-slate-600 pt-4 border-t border-slate-800">
-                &copy; 2026 GeoSeriesHub - Hak Cipta Dilindungi.
+                &copy; 2026 GeoStudy - Hak Cipta Dilindungi.
             </p>
         </div>
     </footer>
@@ -861,65 +930,6 @@
             const slide = track.children[index];
             if (slide && M.stagger) M.animate(Array.from(slide.children), { opacity: [0, 1], y: [18, 0] }, { duration: 0.55, ease: [0.22, 1, 0.36, 1], delay: M.stagger(0.08, { startDelay: 0.1 }) });
         }
-
-        let currentSlide = 0;
-        const totalSlides = 3;
-        const track = document.getElementById('carouselTrack');
-        const dots = document.querySelectorAll('.dot');
-
-        function updateCarousel() {
-            geoSlide(track, currentSlide);
-            
-            // Update active dots
-            dots.forEach((dot, idx) => {
-                if (idx === currentSlide) {
-                    dot.classList.remove('bg-slate-300');
-                    dot.classList.add('bg-indigo-600', 'w-6');
-                } else {
-                    dot.classList.remove('bg-indigo-600', 'w-6');
-                    dot.classList.add('bg-slate-300', 'w-3');
-                }
-            });
-        }
-
-        function moveCarousel(direction) {
-            // Infinite loop logic
-            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
-            updateCarousel();
-        }
-
-        function goToSlide(index) {
-            currentSlide = index;
-            updateCarousel();
-        }
-
-        // Swipe Gesture support for Mobile Carousel
-        // Kartu hanya berpindah bila gerakan jari jelas HORIZONTAL dan pengguna
-        // tidak sedang menggulir isi kotak ke atas/bawah. Sebelumnya, jari yang
-        // sedikit bergeser ke samping saat membaca bagian bawah ikut memindahkan kartu.
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let touchScroller = null;
-        let touchStartScroll = 0;
-
-        const carouselViewport = track.parentElement;
-        carouselViewport.addEventListener('touchstart', (e) => {
-            const t = e.changedTouches[0];
-            touchStartX = t.screenX;
-            touchStartY = t.screenY;
-            touchScroller = e.target.closest ? e.target.closest('.custom-scrollbar') : null;
-            touchStartScroll = touchScroller ? touchScroller.scrollTop : 0;
-        }, {passive: true});
-
-        carouselViewport.addEventListener('touchend', (e) => {
-            const t = e.changedTouches[0];
-            const dx = t.screenX - touchStartX;
-            const dy = t.screenY - touchStartY;
-            if (touchScroller && touchScroller.scrollTop !== touchStartScroll) return; // sedang menggulir isi kotak
-            if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 2) return;           // bukan geser horizontal
-            moveCarousel(dx < 0 ? 1 : -1);                                               // kiri = berikutnya, kanan = sebelumnya
-        }, {passive: true});
-
 
         /* ============================================================
            2. CALCULATOR & FORMULA LOGIC (SECTION 3)
@@ -1379,9 +1389,6 @@
            5. WINDOW ONLOAD INITIALIZATION
            ============================================================ */
         window.onload = function() {
-            // Initialize Carousel
-            updateCarousel();
-
             // Kolom isian pecahan (ketik 3/5 lalu spasi)
             initFractionFields();
 
@@ -1401,7 +1408,7 @@
     <div id="geoArena" class="hidden fixed inset-0 z-[100] flex-col bg-slate-900 opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true" aria-label="Arena Geo Leader">
         <div class="flex items-center justify-between gap-3 px-3 sm:px-5 h-14 shrink-0 bg-indigo-950 text-white border-b border-white/10">
             <button id="geoBackBtn" type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#b9cdb0]">
-                <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke GeoSeriesHub</span>
+                <i class="fa-solid fa-arrow-left"></i> <span>Kembali ke GeoStudy</span>
             </button>
             <span class="font-extrabold tracking-tight">Geo <span class="text-[#b9cdb0]">Leader</span></span>
             <span class="hidden sm:block w-40" aria-hidden="true"></span>
@@ -3701,6 +3708,14 @@ sub, sup {
   }
 }
 
+.pin-hint {
+  font-size: 0.9rem;
+  background: #eef3f8;
+  border-radius: 0.6rem;
+  padding: 0.55rem 0.75rem;
+  margin-top: 0.5rem;
+}
+
 /* KaTeX di dalam kartu soal, pilihan, dan pembahasan */
 .katex {
   font-size: 1.05em;
@@ -4212,14 +4227,14 @@ sub, sup {
   var btn = null;
   var externalPause = false;
 
-  var BEAT = 60 / 74;
+  var BEAT = 60 / 108;
   var CHORDS = [
+    [57, 60, 64, 67], /* Am7 */
     [53, 57, 60, 64], /* Fmaj7 */
-    [52, 55, 59, 62], /* Em7 */
-    [50, 53, 57, 60], /* Dm7 */
-    [48, 52, 55, 59] /* Cmaj7 */
+    [48, 52, 55, 60], /* C */
+    [55, 59, 62, 67] /* G */
   ];
-  var SCALE = [72, 74, 76, 79, 81, 84];
+  var SCALE = [69, 72, 76, 79, 81, 84];
 
   var ICON_ON =
     '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
@@ -4239,10 +4254,10 @@ sub, sup {
     master.gain.value = muted ? 0 : 0.9;
     master.connect(ctx.destination);
     bgmGain = ctx.createGain();
-    bgmGain.gain.value = 0.15;
+    bgmGain.gain.value = 0.34;
     bgmGain.connect(master);
     sfxGain = ctx.createGain();
-    sfxGain.gain.value = 0.5;
+    sfxGain.gain.value = 0.6;
     sfxGain.connect(master);
     return ctx;
   }
@@ -4315,9 +4330,16 @@ sub, sup {
     tone({ t: t + BEAT * 2, f: 110, to: 42, dur: 0.28, type: 'sine', vol: 0.6, dest: bgmGain });
     for (i = 0; i < 8; i++) hat(t + i * (BEAT / 2) + (i % 2 ? 0.04 : 0), i % 2 ? 0.1 : 0.05);
 
-    var spots = [0, 1.5, 2, 3, 3.5];
+    hat(t + BEAT, 0.28); /* tepukan di ketukan 2 dan 4 */
+    hat(t + BEAT * 3, 0.28);
+    tone({ t: t + BEAT * 3.5, f: 110, to: 42, dur: 0.2, type: 'sine', vol: 0.5, dest: bgmGain });
+    chord.forEach(function (m) {
+      tone({ t: t + BEAT * 1.5, f: hz(m + 12), dur: BEAT * 0.4, type: 'triangle', vol: 0.12, attack: 0.01, lp: 2600, dest: bgmGain });
+    });
+
+    var spots = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5];
     spots.forEach(function (b) {
-      if (Math.random() < 0.55) {
+      if (Math.random() < 0.78) {
         var m = SCALE[Math.floor(Math.random() * SCALE.length)];
         tone({ t: t + b * BEAT, f: hz(m), dur: BEAT * 1.4, type: 'sine', vol: 0.22, attack: 0.02, lp: 2200, dest: bgmGain });
       }
@@ -7483,6 +7505,7 @@ sub, sup {
         null,
         h('h3', null, 'Masuk Mode Guru'),
         h('p', { class: 'modal-text' }, 'Masukkan PIN untuk mengelola bank soal.'),
+        h('p', { class: 'modal-text pin-hint' }, GG.CONFIG.teacherPin === '1234' ?'),
         input,
         err,
         h(
@@ -7982,7 +8005,7 @@ sub, sup {
     }, 450);
   }
 
-  /* Jembatan dengan halaman GeoSeriesHub (arena tertanam). */
+  /* Jembatan dengan halaman GeoStudy (arena tertanam). */
   window.addEventListener('message', function (e) {
     if (e.source !== window.parent) return;
     var d = e.data || {};
@@ -8047,6 +8070,7 @@ sub, sup {
             function openArena() {
                 if (isOpen) return;
                 isOpen = true;
+                if (window.GeoBgm) window.GeoBgm.setGame(true);
                 lastFocus = document.activeElement;
                 clearTimeout(hideTimer);
                 if (!loaded) {
@@ -8069,6 +8093,7 @@ sub, sup {
             function closeArena() {
                 if (!isOpen) return;
                 isOpen = false;
+                if (window.GeoBgm) window.GeoBgm.setGame(false);
                 post({ type: 'geo-pause', paused: true });
                 arena.classList.add('opacity-0');
                 hideTimer = setTimeout(() => {
@@ -8195,7 +8220,6 @@ function geoLoadCloudQuiz() {
     const letters = ['A', 'B', 'C', 'D', 'E'];
     let isOpen = false, lastFocus = null, runId = 0, score = 0, done = 0, total = 0;
 
-    initCr(document.querySelector('#section-pembelajaran [data-cr]'));
 
     function showResult() {
         const pct = Math.round((score / total) * 100);
@@ -8344,6 +8368,305 @@ document.addEventListener('DOMContentLoaded', function () {
         if (el.dataset.split === 'hero' || !M.inView) play(); else M.inView(el, play, { amount: 0.6 });
     });
 });
+</script>
+<button type="button" id="bgmBtn" class="fixed bottom-4 right-4 z-[60] w-12 h-12 rounded-full bg-indigo-600 text-white shadow-xl border-2 border-white flex items-center justify-center hover:bg-indigo-700 transition focus:outline-none focus-visible:ring-4 focus-visible:ring-indigo-300" aria-pressed="true" aria-label="Musik latar: nyala" title="Musik latar"><i class="fa-solid fa-music text-lg"></i></button>
+<script>
+/* GeoStudy: kartu geser, navigasi bagian, dan musik latar */
+function initSnap(root) {
+    const sc = root.querySelector('[data-snap]');
+    const cards = Array.from(sc.children);
+    const tabs = Array.from(root.querySelectorAll('[data-tab]'));
+    const prev = root.querySelector('[data-snap-prev]'), next = root.querySelector('[data-snap-next]');
+    const cnt = root.querySelector('[data-snap-count]');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const ON = ['bg-indigo-600', 'text-white', 'border-indigo-600', 'shadow-md'], OFF = ['bg-white', 'text-slate-700', 'border-slate-200', 'hover:border-indigo-300'];
+    let idx = 0, raf = 0;
+    function go(i) {
+        i = Math.max(0, Math.min(cards.length - 1, i));
+        const c = cards[i];
+        const left = sc.scrollLeft + c.getBoundingClientRect().left - sc.getBoundingClientRect().left - (sc.clientWidth - c.offsetWidth) / 2;
+        sc.scrollTo({ left: left, behavior: reduce ? 'auto' : 'smooth' });
+    }
+    function sync() {
+        raf = 0;
+        const mid = sc.getBoundingClientRect().left + sc.clientWidth / 2;
+        let best = 0, bd = Infinity;
+        cards.forEach((c, i) => { const r = c.getBoundingClientRect(), d = Math.abs(r.left + r.width / 2 - mid); if (d < bd) { bd = d; best = i; } });
+        idx = best;
+        cards.forEach((c, i) => c.classList.toggle('is-active', i === idx));
+        tabs.forEach((t, i) => {
+            t.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+            (i === idx ? OFF : ON).forEach((k) => t.classList.remove(k));
+            (i === idx ? ON : OFF).forEach((k) => t.classList.add(k));
+        });
+        prev.disabled = idx === 0; next.disabled = idx === cards.length - 1;
+        if (cnt) cnt.textContent = 'Kartu ' + (idx + 1) + ' dari ' + cards.length;
+    }
+    sc.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(sync); }, { passive: true });
+    prev.addEventListener('click', () => go(idx - 1));
+    next.addEventListener('click', () => go(idx + 1));
+    tabs.forEach((t, i) => t.addEventListener('click', () => go(i)));
+    sc.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); go(idx + 1); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); go(idx - 1); }
+    });
+    window.addEventListener('resize', () => go(idx));
+    sync();
+}
+document.querySelectorAll('[data-snap-root]').forEach(initSnap);
+
+/* Navigasi: menu seluler, penanda bagian aktif, bilah progres, dan tombol "Lanjut" di akhir tiap bagian */
+(function () {
+    const ORDER = [['section-carousel', 'Latar Belakang'], ['section-pembelajaran', 'Materi Pembelajaran'], ['section-materi', 'Rumus & Rangkuman'],
+                   ['section-kalkulator', 'Kalkulator Interaktif'], ['section-asesmen', 'Asesmen'], ['section-profil', 'Profil Pengembang']];
+    const secs = ORDER.map((o) => document.getElementById(o[0]));
+    const menu = document.getElementById('mobileMenu'), btn = document.getElementById('menuBtn'), bar = document.getElementById('readBar');
+    const links = Array.from(document.querySelectorAll('.nav-link'));
+    function setMenu(open) {
+        menu.classList.toggle('hidden', !open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
+        btn.firstElementChild.className = 'fa-solid ' + (open ? 'fa-xmark' : 'fa-bars') + ' text-lg';
+    }
+    btn.addEventListener('click', () => setMenu(menu.classList.contains('hidden')));
+    menu.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('a')) setMenu(false); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+
+    let ticking = false;
+    function spy() {
+        ticking = false;
+        const atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+        let cur = secs[0];
+        secs.forEach((el) => { if (el && el.getBoundingClientRect().top <= 140) cur = el; });
+        if (atEnd) cur = secs[secs.length - 1];
+        links.forEach((a) => { if (cur && a.getAttribute('href') === '#' + cur.id) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0) + '%';
+    }
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(spy); } }, { passive: true });
+    window.addEventListener('resize', spy);
+    spy();
+
+    ORDER.forEach((o, i) => {
+        const el = secs[i];
+        if (!el) return;
+        const nx = ORDER[i + 1];
+        const d = document.createElement('div');
+        d.className = 'mt-10 text-center';
+        d.innerHTML = '<p class="text-sm font-semibold text-slate-400 mb-2">Bagian ' + (i + 1) + ' dari ' + ORDER.length + '</p>' + (nx
+            ? '<a href="#' + nx[0] + '" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-slate-200 shadow-sm text-base font-semibold text-indigo-700 hover:bg-indigo-50 transition">Lanjut: ' + nx[1] + ' <i class="fa-solid fa-arrow-down"></i></a>'
+            : '<button type="button" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-slate-200 shadow-sm text-base font-semibold text-indigo-700 hover:bg-indigo-50 transition" onclick="window.scrollTo({top:0,behavior:\'smooth\'})">Kembali ke atas <i class="fa-solid fa-arrow-up"></i></button>');
+        el.appendChild(d);
+    });
+})();
+
+/* Musik latar lembut (disintesis dengan Web Audio, tanpa berkas). Mulai setelah sentuhan pertama; jeda saat game dibuka. */
+(function () {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    const btn = document.getElementById('bgmBtn');
+    if (!btn) return;
+    if (!AC) { btn.remove(); return; }
+    const KEY = 'geostudy:bgm';
+    let pref = 'on';
+    try { pref = localStorage.getItem(KEY) || 'on'; } catch (e) { /* abaikan */ }
+    const CH = [[48, 52, 55, 59], [45, 52, 55, 60], [41, 48, 52, 57], [43, 50, 55, 59]];
+    const PENT = [72, 74, 76, 79, 81, 84];
+    const TARGET = 0.17, BAR = 8;
+    let ctx = null, master = null, nextT = 0, bar = 0, gameOpen = false;
+    const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+    const shouldPlay = () => pref === 'on' && !gameOpen && !document.hidden;
+
+    function note(t, f, dur, type, vol, atk, lp) {
+        const o = ctx.createOscillator(), g = ctx.createGain(), fl = ctx.createBiquadFilter();
+        o.type = type; o.frequency.value = f;
+        fl.type = 'lowpass'; fl.frequency.value = lp;
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.linearRampToValueAtTime(vol, t + atk);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        o.connect(fl); fl.connect(g); g.connect(master);
+        o.start(t); o.stop(t + dur + 0.05);
+    }
+    function scheduleBar() {
+        const t = nextT, c = CH[bar % CH.length];
+        c.forEach((m, i) => note(t + i * 0.05, hz(m), BAR + 1.5, 'triangle', 0.09, 2.2, 800));
+        note(t, hz(c[0] - 12), BAR, 'sine', 0.14, 1.5, 400);
+        [1.5, 3, 4.5, 6].forEach((b) => {
+            if (Math.random() < 0.7) note(t + b + Math.random() * 0.3, hz(PENT[Math.floor(Math.random() * PENT.length)]), 2.4, 'sine', 0.05, 0.02, 2600);
+        });
+        nextT += BAR; bar++;
+    }
+    function tick() {
+        if (!ctx || ctx.state !== 'running') return;
+        while (nextT < ctx.currentTime + 3) scheduleBar();
+    }
+    function paint() {
+        const on = pref === 'on';
+        btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        btn.setAttribute('aria-label', 'Musik latar: ' + (on ? 'nyala' : 'mati'));
+        btn.title = on ? 'Matikan musik latar' : 'Nyalakan musik latar';
+        btn.firstElementChild.className = 'fa-solid ' + (on ? 'fa-music' : 'fa-volume-xmark') + ' text-lg';
+        btn.classList.toggle('bg-indigo-600', on); btn.classList.toggle('bg-slate-500', !on);
+    }
+    function apply() {
+        if (!ctx) return;
+        const now = ctx.currentTime;
+        master.gain.cancelScheduledValues(now);
+        if (shouldPlay()) {
+            ctx.resume().then(() => { nextT = Math.max(nextT, ctx.currentTime + 0.1); tick(); });
+            master.gain.setTargetAtTime(TARGET, now, 0.7);
+        } else {
+            master.gain.setTargetAtTime(0, now, 0.25);
+            setTimeout(() => { if (ctx && !shouldPlay()) ctx.suspend(); }, 1500);
+        }
+    }
+    function begin() {
+        if (ctx || !shouldPlay()) return;
+        try { ctx = new AC(); } catch (e) { btn.remove(); return; }
+        master = ctx.createGain(); master.gain.value = 0; master.connect(ctx.destination);
+        nextT = ctx.currentTime + 0.2;
+        setInterval(tick, 1000);
+        apply();
+    }
+    ['pointerdown', 'keydown', 'touchend'].forEach((ev) => document.addEventListener(ev, (e) => { if (!(e.target.closest && e.target.closest('#bgmBtn'))) begin(); }, { passive: true }));
+    btn.addEventListener('click', () => {
+        pref = pref === 'on' ? 'off' : 'on';
+        try { localStorage.setItem(KEY, pref); } catch (e) { /* abaikan */ }
+        paint();
+        if (!ctx) begin(); else apply();
+    });
+    document.addEventListener('visibilitychange', apply);
+    window.GeoBgm = { setGame: (v) => { gameOpen = !!v; apply(); } };
+    paint();
+})();
+</script>
+
+<!-- Materi layar penuh (khusus HP) -->
+<div id="matFull" class="hidden fixed inset-0 z-[100] flex-col bg-white" role="dialog" aria-modal="true" aria-label="Kartu lengkap">
+    <div class="flex items-center justify-between gap-2 px-3 h-14 shrink-0 bg-indigo-950 text-white border-b border-white/10">
+        <button id="matFullClose" type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-white"><i class="fa-solid fa-xmark"></i> <span>Keluar</span></button>
+        <div class="flex items-center gap-2">
+            <button id="matFullPrev" type="button" aria-label="Kartu sebelumnya" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition flex items-center justify-center disabled:opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"><i class="fa-solid fa-chevron-left"></i></button>
+            <span id="matFullCount" class="text-sm font-semibold text-slate-200 min-w-[3.5rem] text-center" aria-live="polite"></span>
+            <button id="matFullNext" type="button" aria-label="Kartu berikutnya" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition flex items-center justify-center disabled:opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </div>
+    <div id="matFullBody" data-lenis-prevent class="flex-1 min-h-0 overflow-y-auto px-4 pt-4" style="overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));"></div>
+</div>
+<script>
+/* Latar Belakang & Materi Pembelajaran di HP: kartu ringkas -> ketuk -> versi lengkap layar penuh (tombol Keluar, tombol Back HP, Esc) */
+(function () {
+    const ov = document.getElementById('matFull');
+    if (!ov) return;
+    const groups = ['section-carousel', 'section-pembelajaran'].map((id) => {
+        const sec = document.getElementById(id);
+        const root = sec && sec.querySelector('[data-snap-root]');
+        if (!root) return null;
+        return { sec: sec, cards: Array.from(root.querySelectorAll('[data-snap] > [data-card]')), tabs: Array.from(root.querySelectorAll('[data-tab]')) };
+    }).filter(Boolean);
+    if (!groups.length) return;
+    const body = document.getElementById('matFullBody'), count = document.getElementById('matFullCount');
+    const closeBtn = document.getElementById('matFullClose'), prevBtn = document.getElementById('matFullPrev'), nextBtn = document.getElementById('matFullNext');
+    const mq = matchMedia('(max-width: 639px)');
+    const html = document.documentElement;
+    let g = groups[0], cur = 0, opener = null, pushed = false, skipPop = false;
+    const isOpen = () => !ov.classList.contains('hidden');
+
+    function setA11y() {
+        groups.forEach((gr) => gr.cards.forEach((c, i) => {
+            if (mq.matches) { c.setAttribute('role', 'button'); c.tabIndex = 0; c.setAttribute('aria-label', 'Buka kartu lengkap nomor ' + (i + 1)); }
+            else { c.removeAttribute('role'); c.removeAttribute('tabindex'); c.removeAttribute('aria-label'); }
+        }));
+    }
+
+    function render(i) {
+        cur = i;
+        const c = g.cards[i];
+        const head = c.children[0].cloneNode(true), cont = c.children[1].cloneNode(true);
+        ['h-[26rem]', 'sm:h-[34rem]', 'h-56', 'sm:h-64', 'overflow-y-auto', 'custom-scrollbar', 'pr-3'].forEach((k) => cont.classList.remove(k));
+        cont.removeAttribute('data-lenis-prevent');
+        body.replaceChildren(head, cont);
+        if (!cont.querySelector('.katex') && window.renderMathInElement) window.renderMathInElement(body, window.MATH_OPTS);
+        body.scrollTop = 0;
+        count.textContent = (i + 1) + ' / ' + g.cards.length;
+        prevBtn.disabled = i === 0; nextBtn.disabled = i === g.cards.length - 1;
+        if (g.tabs[i]) g.tabs[i].click(); // samakan posisi geser kartu di belakang
+    }
+
+    function hide() {
+        if (!isOpen()) return;
+        ov.classList.add('hidden'); ov.classList.remove('flex');
+        html.classList.remove('overflow-hidden');
+        body.replaceChildren();
+        if (opener && opener.focus) opener.focus({ preventScroll: true });
+        opener = null;
+    }
+    function open(gr, i, from) {
+        if (!mq.matches) return;
+        g = gr;
+        if (isOpen()) { render(i); return; }
+        opener = from || null;
+        render(i);
+        ov.classList.remove('hidden'); ov.classList.add('flex');
+        html.classList.add('overflow-hidden'); // jeda Lenis & kunci scroll halaman (sama seperti arena game/kuis)
+        try { history.pushState({ geoMat: 1 }, ''); pushed = true; } catch (e) { pushed = false; }
+        closeBtn.focus({ preventScroll: true });
+    }
+    function close() {
+        if (!isOpen()) return;
+        hide();
+        if (pushed) { pushed = false; skipPop = true; try { history.back(); } catch (e) { skipPop = false; } }
+    }
+
+    groups.forEach((gr) => {
+        // Ketuk kartu -> buka (abaikan ketukan pada tautan/tombol di dalam kartu, mis. ikon YouTube)
+        gr.sec.addEventListener('click', (e) => {
+            if (!mq.matches) return;
+            const c = e.target.closest && e.target.closest('[data-card]');
+            if (!c || e.target.closest('a, button')) return;
+            const i = gr.cards.indexOf(c);
+            if (i > -1) open(gr, i, c);
+        });
+        gr.sec.addEventListener('keydown', (e) => {
+            if (!mq.matches || (e.key !== 'Enter' && e.key !== ' ')) return;
+            const i = gr.cards.indexOf(e.target);
+            if (i > -1) { e.preventDefault(); open(gr, i, e.target); }
+        });
+    });
+
+    closeBtn.addEventListener('click', close);
+    prevBtn.addEventListener('click', () => { if (cur > 0) render(cur - 1); });
+    nextBtn.addEventListener('click', () => { if (cur < g.cards.length - 1) render(cur + 1); });
+    document.addEventListener('keydown', (e) => {
+        if (!isOpen()) return;
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft' && cur > 0) render(cur - 1);
+        else if (e.key === 'ArrowRight' && cur < g.cards.length - 1) render(cur + 1);
+    });
+    // Tombol Back di HP menutup layar penuh, bukan meninggalkan halaman
+    window.addEventListener('popstate', () => {
+        if (skipPop) { skipPop = false; return; }
+        if (isOpen()) { pushed = false; hide(); }
+    });
+
+    // Geser kiri/kanan di layar penuh = pindah kartu (tidak aktif bila sentuhan dimulai di rumus yang bisa digulir)
+    let sx = 0, sy = 0, track = false;
+    body.addEventListener('touchstart', (e) => {
+        const t = e.touches[0]; sx = t.clientX; sy = t.clientY;
+        track = e.touches.length === 1 && !(e.target.closest && e.target.closest('.overflow-x-auto, .katex-display'));
+    }, { passive: true });
+    body.addEventListener('touchend', (e) => {
+        if (!track) return; track = false;
+        const t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+        if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(dy) * 1.8) {
+            if (dx < 0 && cur < g.cards.length - 1) render(cur + 1);
+            else if (dx > 0 && cur > 0) render(cur - 1);
+        }
+    }, { passive: true });
+
+    function onMq() { setA11y(); if (!mq.matches) close(); }
+    if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq);
+    setA11y();
+})();
 </script>
 </body>
 </html>
